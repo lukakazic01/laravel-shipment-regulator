@@ -18,15 +18,23 @@
         </nav>
 
         @auth
-            <a href="{{ route('home') }}"
-               class="inline-flex items-center text-sm font-semibold px-4 py-2 rounded-lg bg-primary text-white shadow-lg shadow-orange-900/30 hover:bg-[#FF7F1F] transition-colors">
-                Dashboard
-            </a>
+            <form method="POST" action="{{ route('logout') }}" class="flex items-center gap-4">
+                @csrf
+                <button type="submit" class="font-medium text-primary hover:text-[#FF7F1F] transition-colors">
+                    Log out
+                </button>
+            </form>
         @else
-            <a href="{{ route('home') }}"
-               class="inline-flex items-center text-sm font-semibold px-4 py-2 rounded-lg bg-primary text-white shadow-lg shadow-orange-900/30 hover:bg-[#FF7F1F] transition-colors">
-                Sign in
-            </a>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('register') }}"
+                   class="font-medium text-primary hover:text-[#FF7F1F] transition-colors">
+                    Register
+                </a>
+                <a href="{{ route('login') }}"
+                   class="font-medium text-primary hover:text-[#FF7F1F] transition-colors">
+                    Login
+                </a>
+            </div>
         @endauth
     </div>
 </header>
