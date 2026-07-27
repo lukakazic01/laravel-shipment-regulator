@@ -32,16 +32,11 @@
             <x-forms.input />
             <x-forms.error-message />
         </x-forms.field>
-        <x-forms.field required name="status">
-            <x-forms.label>Status</x-forms.label>
-            <x-forms.input />
-            <x-forms.error-message />
-        </x-forms.field>
         <x-forms.field required name="details">
             <x-forms.label>Details</x-forms.label>
             <x-forms.textarea />
             <x-forms.error-message />
         </x-forms.field>
-        <button type="submit">Create shipment</button>
+        <x-base-button type="submit">Create shipment</x-base-button>
     </form>
 </x-layout>
