@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Shipment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ShipmentsController extends Controller
 {
 
     public function index()
     {
-        return view('shipments.index');
+        $shipments = Shipment::query()->hydrate(
+            Cache::remember('shipments', 3600, function () {
+                return Shipment::all()->toArray();
+            })
+        );
+        return view('shipments.index', compact('shipments'));
     }
 
     public function create()
