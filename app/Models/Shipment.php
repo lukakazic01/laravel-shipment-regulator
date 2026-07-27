@@ -17,10 +17,10 @@ class Shipment extends Model
 {
     use HasFactory;
 
-    const STATUS_IN_PROGRESS = 'in_progress';
-    const STATUS_UNASSIGNED = 'unassigned';
-    const STATUS_PROBLEM = 'problem';
-    const STATUS_COMPLETED = 'completed';
+    const string STATUS_IN_PROGRESS = 'in_progress';
+    const string STATUS_UNASSIGNED = 'unassigned';
+    const string STATUS_PROBLEM = 'problem';
+    const string STATUS_COMPLETED = 'completed';
 
     const array SHIPMENT_STATUSES = [
         self::STATUS_COMPLETED,
