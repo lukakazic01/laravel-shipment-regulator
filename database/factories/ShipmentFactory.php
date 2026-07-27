@@ -22,7 +22,7 @@ class ShipmentFactory extends Factory
             'to_city' => fake()->city(),
             'to_country' => fake()->country(),
             'price' => fake()->numberBetween(1, 1000),
-            'status' => fake()->randomElement(['pending', 'delivered', 'cancelled']),
+            'status' => fake()->randomElement(Shipment::SHIPMENT_STATUSES),
             'details' => fake()->text(),
         ];
     }

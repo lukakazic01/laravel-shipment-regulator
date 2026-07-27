@@ -25,7 +25,7 @@ class ShipmentRepository
     {
         // TODO: Add default status 'pending' into table instead of putting it manually
         $request->user()->shipments()->create([
-            'status' => 'pending',
+            'status' => $this->shipment::STATUS_PENDING,
             ...$request->validated(),
         ]);
     }
