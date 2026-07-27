@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 #[Table(name: 'shipments')]
 #[Fillable('user_id', 'title', 'from_city', 'from_country', 'to_city', 'to_country', 'price', 'status', 'details')]
@@ -15,4 +16,8 @@ use Illuminate\Database\Eloquent\Model;
 class Shipment extends Model
 {
     use HasFactory;
+
+    public function user(): BelongsTo {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

@@ -13,7 +13,7 @@ class ShipmentsController extends Controller
     {
         $shipments = Shipment::query()->hydrate(
             Cache::remember('shipments', 3600, function () {
-                return Shipment::all()->toArray();
+                return Shipment::all()->where('user_id', auth()->id())->toArray();
             })
         );
         return view('shipments.index', compact('shipments'));
