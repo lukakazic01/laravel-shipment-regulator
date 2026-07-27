@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SelectOptions;
 use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
+use App\Models\User;
 use App\Repositories\ShipmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -22,7 +24,10 @@ class ShipmentsController extends Controller
 
     public function create()
     {
-        return view('shipments.create');
+        $users = User::query()->get();
+        $shipmentStatuses = SelectOptions::toSelectOptions(Shipment::SHIPMENT_STATUSES);
+        dd($shipmentStatuses);
+        return view('shipments.create', compact('users', 'shipmentStatuses'));
     }
 
     #[NoReturn]

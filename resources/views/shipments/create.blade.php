@@ -27,6 +27,11 @@
             <x-forms.input :value="old('to_country', '')" />
             <x-forms.error-message />
         </x-forms.field>
+        <x-forms.field required name="status">
+            <x-forms.label>To country</x-forms.label>
+            <x-forms.select :values="$shipmentStatuses" />
+            <x-forms.error-message />
+        </x-forms.field>
         <x-forms.field required name="price">
             <x-forms.label>Price</x-forms.label>
             <x-forms.input type="number" :value="old('price', '')" />
