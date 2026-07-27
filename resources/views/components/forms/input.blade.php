@@ -6,7 +6,7 @@
 <input
     name="{{ $name }}"
     id="{{ $name }}"
-    value="{{ $value }}"
+    value="{{ $value ?? '' }}"
     @if ($required) required @endif
     {{
         $attributes

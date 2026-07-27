@@ -39,7 +39,7 @@
         </x-forms.field>
         <x-forms.field required name="details">
             <x-forms.label>Details</x-forms.label>
-            <x-forms.input />
+            <x-forms.textarea />
             <x-forms.error-message />
         </x-forms.field>
         <button type="submit">Create shipment</button>

@@ -2,6 +2,6 @@
     'name',
     'required' => false,
 ])
-<div {{ $attributes->merge() }}>
+<div {{ $attributes->class(['flex flex-col gap-1']) }}>
     {{ $slot }}
 </div>
