@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Shipment;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateShipmentRequest extends FormRequest
 {
@@ -28,6 +30,8 @@ class CreateShipmentRequest extends FormRequest
             'to_country' => 'string|required|max:64|min:1',
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
+            'user_id' => 'integer|exists:users,id',
+            'status' => Rule::in(Shipment::SHIPMENT_STATUSES),
         ];
     }
 }

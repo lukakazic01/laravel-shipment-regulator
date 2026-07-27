@@ -4,20 +4,18 @@ namespace App\View\Components\forms;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class select extends Component
 {
 
     /**
-     * @param array{label: string|int, value: string|int} $values
-     * @param string $name
-     * @param bool $required
+     * @param Collection<int, array{label: string|int, value: string|int}> $values
+     * @param string|int|null $selected
      */
     public function __construct(
-        public array $values,
-        public string $name,
-        public bool $required = false,
+        public Collection $values,
         public int|string|null $selected = null,
     ){}
 

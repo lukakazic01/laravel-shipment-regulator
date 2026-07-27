@@ -24,10 +24,7 @@ class ShipmentRepository
     public function createShipment(CreateShipmentRequest $request): void
     {
         // TODO: Add default status 'pending' into table instead of putting it manually
-        $request->user()->shipments()->create([
-            'status' => $this->shipment::STATUS_PENDING,
-            ...$request->validated(),
-        ]);
+        $request->user()->shipments()->create($request->validated());
     }
 
 }

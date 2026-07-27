@@ -1,3 +1,4 @@
+@aware(['name', 'required'])
 <select
     name="{{ $name }}"
     id="{{ $name }}"
@@ -11,9 +12,9 @@
             ])
     }}
 >
-    @foreach ($values as [$label, $value])
-        <option value="{{ $value }}" @selected(old($name, $selected ?? '') == $value)>
-            {{ $label }}
+    @foreach ($values as $option)
+        <option value="{{ $option['value'] }}" @selected(old($name, $selected ?? '') == $option['value'])>
+            {{ $option['label'] }}
         </option>
     @endforeach
 </select>

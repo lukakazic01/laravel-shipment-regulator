@@ -24,9 +24,8 @@ class ShipmentsController extends Controller
 
     public function create()
     {
-        $users = User::query()->get();
+        $users = SelectOptions::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
         $shipmentStatuses = SelectOptions::toSelectOptions(Shipment::SHIPMENT_STATUSES);
-        dd($shipmentStatuses);
         return view('shipments.create', compact('users', 'shipmentStatuses'));
     }
 
