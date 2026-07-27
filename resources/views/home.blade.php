@@ -1,4 +1,7 @@
 <x-layout>
     <x-slot:title>Home</x-slot:title>
-    Home
+    <p class="text-center">
+        Welcome to our shipment manager, to see all the shipments,
+        <a href="{{ route('shipments.index') }}" class="text-blue-500">go here</a>
+    </p>
 </x-layout>

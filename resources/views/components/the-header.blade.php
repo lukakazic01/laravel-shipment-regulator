@@ -13,8 +13,7 @@
 
         <nav class="hidden sm:flex items-center gap-8 text-sm font-medium text-slate-300">
             <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>
-            <a href="{{ route('home') }}" class="hover:text-white transition-colors">Shipments</a>
-            <a href="{{ route('home') }}" class="hover:text-white transition-colors">Track</a>
+            <a href="{{ route('shipments.index') }}" class="hover:text-white transition-colors">Shipments</a>
         </nav>
 
         @auth
