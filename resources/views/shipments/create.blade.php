@@ -30,7 +30,7 @@
         </x-forms.field>
         <x-forms.field required name="status">
             <x-forms.label>To country</x-forms.label>
-            <x-forms.select :values="$shipmentStatuses" :selected="Shipment::STATUS_PENDING"/>
+            <x-forms.select :values="$shipmentStatuses" :selected="Shipment::STATUS_IN_PROGRESS"/>
             <x-forms.error-message/>
         </x-forms.field>
         <x-forms.field required name="user_id">

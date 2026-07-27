@@ -17,16 +17,16 @@ class Shipment extends Model
 {
     use HasFactory;
 
-    const STATUS_PENDING = 'pending';
-    const STATUS_CANCELLED = 'cancelled';
-    const STATUS_REJECTED = 'rejected';
-    const STATUS_DELIVERED = 'delivered';
+    const STATUS_IN_PROGRESS = 'in_progress';
+    const STATUS_UNASSIGNED = 'unassigned';
+    const STATUS_PROBLEM = 'problem';
+    const STATUS_COMPLETED = 'completed';
 
     const array SHIPMENT_STATUSES = [
-        self::STATUS_CANCELLED,
-        self::STATUS_REJECTED,
-        self::STATUS_DELIVERED,
-        self::STATUS_PENDING
+        self::STATUS_COMPLETED,
+        self::STATUS_UNASSIGNED,
+        self::STATUS_PROBLEM,
+        self::STATUS_IN_PROGRESS
     ];
 
     public function user(): BelongsTo {
