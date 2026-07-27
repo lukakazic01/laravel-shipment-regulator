@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use JetBrains\PhpStorm\NoReturn;
 
 class ShipmentsController extends Controller
 {
@@ -24,9 +26,10 @@ class ShipmentsController extends Controller
         return view('shipments.create');
     }
 
-    public function store(Request $request)
+    #[NoReturn]
+    public function store(CreateShipmentRequest $request)
     {
-        dd($request->all());
+        //
     }
 
     public function show(Shipment $shipment)
