@@ -21,6 +21,10 @@ class ShipmentRepository
         return Shipment::query()->where('user_id', auth()->id())->get();
     }
 
+    public function getShipmentsByStatus(string $status): Collection {
+        return Shipment::query()->where('status', $status)->get();
+    }
+
     public function createShipment(CreateShipmentRequest $request): void
     {
         $request->user()->shipments()->create($request->validated());
