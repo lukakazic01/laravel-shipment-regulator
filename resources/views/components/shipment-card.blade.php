@@ -1,4 +1,6 @@
-<div class="bg-secondary/90  rounded shadow-md shadow-secondary/5 p-6">
+<a href="{{ route('shipments.show', $shipment->id) }}"
+   {{ $attributes->class(["bg-secondary/90  rounded shadow-md shadow-secondary/5 p-6 cursor-pointer block"]) }}
+>
     <div class="flex items-start justify-between gap-4">
         <h3 class="font-semibold text-primary">{{ $shipment->title }}</h3>
         <span class="shrink-0 text-xs font-semibold px-2.5 py-1 rounded capitalize bg-green-200 text-green-600">
@@ -20,4 +22,4 @@
         <span class="text-lg font-semibold text-primary">${{ number_format($shipment->price) }}</span>
         <span class="text-xs text-white/50">{{ $shipment->created_at->format('M d, Y') }}</span>
     </div>
-</div>
+</a>

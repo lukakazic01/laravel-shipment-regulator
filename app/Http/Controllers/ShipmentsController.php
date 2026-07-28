@@ -39,7 +39,7 @@ class ShipmentsController extends Controller
 
     public function show(Shipment $shipment)
     {
-        //
+        return view('shipments.show', compact('shipment'));
     }
 
     public function edit(Shipment $shipment)
