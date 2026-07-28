@@ -14,6 +14,9 @@
         <nav class="hidden sm:flex items-center gap-8 text-sm font-medium text-slate-300">
             <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>
             <a href="{{ route('shipments.index') }}" class="hover:text-white transition-colors">Shipments</a>
+            @auth
+                <a href="{{ route('shipments.create') }}" class="hover:text-white transition-colors">Create shipment</a>
+            @endauth
         </nav>
 
         @auth
