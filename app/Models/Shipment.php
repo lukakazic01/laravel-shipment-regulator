@@ -35,7 +35,7 @@ class Shipment extends Model
     public static function booted(): void
     {
         static::created(function ($shipment) {
-            if (self::STATUS_IN_PROGRESS === $shipment->status) {
+            if (self::STATUS_UNASSIGNED === $shipment->status) {
                 Cache::forget('unassigned_shipments');
             }
         });
