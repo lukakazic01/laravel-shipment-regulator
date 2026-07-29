@@ -32,6 +32,18 @@ class ShipmentsController extends Controller
     #[NoReturn]
     public function store(CreateShipmentRequest $request, ShipmentRepository $shipmentRepository)
     {
+        $docMimes = [
+            'application/pdf',
+            'application/msword',
+            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        ];
+        foreach($request->file('documents') as $document) {
+            if (str_starts_with($document->getMimeType(), 'image/')) {
+                dd('image');
+            } else if (in_array($document->getMimeType(), $docMimes)) {
+                dd('document');
+            }
+        }
         $shipmentRepository->createShipment($request);
         Cache::forget('unassigned_shipments');
         return redirect()->route('shipments.index');

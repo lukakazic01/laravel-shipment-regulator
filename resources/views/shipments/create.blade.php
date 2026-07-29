@@ -1,7 +1,7 @@
 @php use App\Models\Shipment; @endphp
 <x-layout>
     <x-slot:title>Create shipment</x-slot:title>
-    <form method="POST" action="{{ route('shipments.store') }}" class="flex flex-col gap-4">
+    <form method="POST" action="{{ route('shipments.store') }}" enctype="multipart/form-data" class="flex flex-col gap-4">
         @csrf
         <x-forms.field required name="title">
             <x-forms.label>Title</x-forms.label>
@@ -46,6 +46,11 @@
         <x-forms.field name="details">
             <x-forms.label>Details</x-forms.label>
             <x-forms.textarea :value="old('details', '')"/>
+            <x-forms.error-message/>
+        </x-forms.field>
+        <x-forms.field name="documents[]">
+            <x-forms.label>Documents</x-forms.label>
+            <x-forms.file-upload multiple />
             <x-forms.error-message/>
         </x-forms.field>
         <x-base-button type="submit">Create shipment</x-base-button>
