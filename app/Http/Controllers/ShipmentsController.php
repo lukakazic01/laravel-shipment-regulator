@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Repositories\ShipmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
 use JetBrains\PhpStorm\NoReturn;
 
 class ShipmentsController extends Controller
@@ -32,6 +33,7 @@ class ShipmentsController extends Controller
     #[NoReturn]
     public function store(CreateShipmentRequest $request, ShipmentRepository $shipmentRepository)
     {
+        $shipment = $shipmentRepository->createShipment($request);
         $docMimes = [
             'application/pdf',
             'application/msword',
@@ -41,10 +43,11 @@ class ShipmentsController extends Controller
             if (str_starts_with($document->getMimeType(), 'image/')) {
                 dd('image');
             } else if (in_array($document->getMimeType(), $docMimes)) {
-                dd('document');
+                $extension = $document->extension();
+                $name= uniqid() . "." . $extension;
+                $document->storeAs("documents/$shipment->id", $name, "public");
             }
         }
-        $shipmentRepository->createShipment($request);
         Cache::forget('unassigned_shipments');
         return redirect()->route('shipments.index');
     }

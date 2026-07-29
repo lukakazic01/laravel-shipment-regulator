@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
 class ShipmentRepository
 {
@@ -25,9 +26,13 @@ class ShipmentRepository
         return Shipment::query()->where('status', $status)->get();
     }
 
-    public function createShipment(CreateShipmentRequest $request): void
+    /**
+     * @param CreateShipmentRequest $request
+     * @return Model<Shipment>
+     */
+    public function createShipment(CreateShipmentRequest $request): Model
     {
-        $request->user()->shipments()->create($request->validated());
+        return $request->user()->shipments()->create($request->validated());
     }
 
 }
