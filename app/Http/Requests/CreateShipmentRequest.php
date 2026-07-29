@@ -30,7 +30,6 @@ class CreateShipmentRequest extends FormRequest
             'to_country' => 'string|required|max:64|min:1',
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
-            'user_id' => 'integer|exists:users,id',
             'status' => Rule::in(Shipment::SHIPMENT_STATUSES),
             'documents' => 'required|array',
             'documents.*' => 'file|mimes:jpeg,png,jpg,webp,docx,pdf,doc|max:10240',

@@ -32,7 +32,7 @@ class ShipmentRepository
      */
     public function createShipment(CreateShipmentRequest $request): Shipment
     {
-        return $request->user()->shipments()->create($request->validated());
+        return Shipment::query()->create($request->validated());
     }
 
 }
