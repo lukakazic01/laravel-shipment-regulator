@@ -1,6 +1,6 @@
 @php use App\View\Components\ShipmentCard; @endphp
 <div
-    {{ $attributes->class(["bg-secondary/90  rounded shadow-md shadow-secondary/5 p-6"]) }}
+    {{ $attributes->class(["bg-white rounded border border-gray-200 p-6"]) }}
 >
     <div class="flex items-start justify-between gap-4">
         <a href="{{ route('shipments.show', $shipment->id) }}"
@@ -10,19 +10,19 @@
         </span>
     </div>
 
-    <div class="mt-4 flex items-center gap-3 text-sm text-white/70">
-        <span class="font-medium text-white">{{ $shipment->from_city }}, {{ $shipment->from_country }}</span>
+    <div class="mt-4 flex items-center gap-3 text-sm text-secondary/70">
+        <span class="font-medium text-secondary">{{ $shipment->from_city }}, {{ $shipment->from_country }}</span>
         <i class="fa-solid fa-arrow-right text-primary"></i>
-        <span class="font-medium text-white">{{ $shipment->to_city }}, {{ $shipment->to_country }}</span>
+        <span class="font-medium text-secondary">{{ $shipment->to_city }}, {{ $shipment->to_country }}</span>
     </div>
 
-    <p class="mt-4 text-sm text-white/70 leading-relaxed">
+    <p class="mt-4 text-sm text-secondary/70 leading-relaxed">
         {{ $shipment->details }}
     </p>
 
     <div class="mt-5 flex items-center justify-between">
         <span class="text-lg font-semibold text-primary">${{ number_format($shipment->price) }}</span>
-        <span class="text-xs text-white/50">{{ $shipment->created_at->format('M d, Y') }}</span>
+        <span class="text-xs text-secondary/50">{{ $shipment->created_at->format('M d, Y') }}</span>
     </div>
     @if($shipment->shipmentDocuments && $shipment->shipmentDocuments->isNotEmpty())
         <div class="mt-5">
@@ -34,7 +34,7 @@
                     <a
                         href="{{ url("/storage/documents$document->document_name") }}"
                         target="_blank"
-                        class="group flex items-center gap-2 rounded border border-transparent bg-secondary/80 px-3 py-2 shadow-sm transition-colors hover:border-primary/50"
+                        class="group flex items-center gap-2 rounded border border-transparent bg-white px-3 py-2 shadow-sm transition-colors hover:border-primary/50"
                     >
                         <i class="fa-solid group-hover:text-primary/50 transition-colors text-gray-700
                             {{ShipmentCard::iconBasedOnFileExtension(last(explode('.', $document->document_name)))}}"
