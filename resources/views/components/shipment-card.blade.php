@@ -6,7 +6,7 @@
         <a href="{{ route('shipments.show', $shipment->id) }}"
            class="font-semibold text-primary">{{ $shipment->title }}</a>
         <span class="shrink-0 text-xs font-semibold px-2.5 py-1 rounded capitalize bg-green-200 text-green-600">
-            {{ $shipment->status }}
+            {{ ucfirst($shipment->status) }}
         </span>
     </div>
 
@@ -32,7 +32,7 @@
             <div class="flex flex-wrap gap-3">
                 @foreach($shipment->shipmentDocuments as $document)
                     <a
-                        href="{{ url("/storage/documents{$document->document_name}") }}"
+                        href="{{ url("/storage/documents$document->document_name") }}"
                         target="_blank"
                         class="group flex items-center gap-2 rounded border border-transparent bg-secondary/80 px-3 py-2 shadow-sm transition-colors hover:border-primary/50"
                     >

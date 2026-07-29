@@ -39,7 +39,12 @@ class ShipmentsController extends Controller
         ];
         foreach($request->file('documents') as $document) {
             if (str_starts_with($document->getMimeType(), 'image/')) {
-                dd('image');
+                $name = $this->uploadImage($document, "/documents/$shipment->id/");
+                $name = '/' . $shipment->id . '/' . $name;
+                ShipmentDocument::query()->create([
+                    'shipment_id' => $shipment->id,
+                    'document_name' => $name,
+                ]);
             } else if (in_array($document->getMimeType(), $docMimes)) {
                 $extension = $document->extension();
                 $name= uniqid() . "." . $extension;

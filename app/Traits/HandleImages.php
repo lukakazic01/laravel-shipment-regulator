@@ -9,12 +9,11 @@ use Intervention\Image\Laravel\Facades\Image;
 trait HandleImages
 {
 
-    public function uploadImage(string $requestFileName, string $path): string
+    public function uploadImage(string $file, string $path): string
     {
         $name = uniqid() . '.webp';
-        $file = request()->file($requestFileName);
-        $path = Storage::disk('public')->path($path . $name);
-        Image::decode($file)->encodeUsingFileExtension(FileExtension::WEBP, quality: 90)->save($path);
+        $image = Image::decode($file)->encodeUsingFileExtension(FileExtension::WEBP, quality: 90);
+        Storage::disk('public')->put("$path/$name", (string) $image);
         return $name;
     }
 
