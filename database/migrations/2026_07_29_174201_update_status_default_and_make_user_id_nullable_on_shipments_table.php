@@ -11,8 +11,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('shipments', function (Blueprint $table) {
-            $table->string('status')->default(Shipment::STATUS_UNASSIGNED)->change();
-            $table->unsignedBigInteger('user_id')->nullable()->change();
+            $table->string('status', 20)->default(Shipment::STATUS_UNASSIGNED)->change();
+            $table->foreignId('user_id')->nullable()->change();
         });
     }
 
@@ -20,7 +20,7 @@ return new class extends Migration
     {
         Schema::table('shipments', function (Blueprint $table) {
             $table->string('status')->default(Shipment::STATUS_IN_PROGRESS)->change();
-            $table->unsignedBigInteger('user_id')->nullable(false)->change();
+            $table->foreignId('user_id')->nullable(false)->change();
         });
     }
 
