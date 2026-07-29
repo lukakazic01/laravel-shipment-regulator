@@ -28,9 +28,9 @@ class ShipmentRepository
 
     /**
      * @param CreateShipmentRequest $request
-     * @return Model<Shipment>
+     * @return Shipment
      */
-    public function createShipment(CreateShipmentRequest $request): Model
+    public function createShipment(CreateShipmentRequest $request): Shipment
     {
         return $request->user()->shipments()->create($request->validated());
     }

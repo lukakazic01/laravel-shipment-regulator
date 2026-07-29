@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\SelectOptions;
 use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
-use App\Models\ShipmentDocument;
 use App\Models\User;
-use App\Repositories\ShipmentDocumentRepository;
 use App\Repositories\ShipmentRepository;
+use App\Services\ShipmentDocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -33,28 +32,11 @@ class ShipmentsController extends Controller
     public function store(
         CreateShipmentRequest $request,
         ShipmentRepository $shipmentRepository,
-        ShipmentDocumentRepository $shipmentDocumentRepository
+        ShipmentDocumentService $shipmentDocumentService
     )
     {
         $shipment = $shipmentRepository->createShipment($request);
-        $docMimes = [
-            'application/pdf',
-            'application/msword',
-            'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        ];
-        foreach($request->file('documents') as $document) {
-            if (str_starts_with($document->getMimeType(), 'image/')) {
-                $name = $this->uploadImage($document, "/documents/$shipment->id/");
-                $name = '/' . $shipment->id . '/' . $name;
-                $shipmentDocumentRepository->createShipmentDocument($shipment->id, $name);
-            } else if (in_array($document->getMimeType(), $docMimes)) {
-                $extension = $document->extension();
-                $name= uniqid() . "." . $extension;
-                $path = $document->storeAs("documents/$shipment->id", $name, "public");
-                $path = str_replace("documents/", "/", $path);
-                $shipmentDocumentRepository->createShipmentDocument($shipment->id, $path);
-            }
-        }
+        $shipmentDocumentService->storeShipmentDocuments($shipment, $request->file('documents'));
         return redirect()->route('shipments.index');
     }
 
