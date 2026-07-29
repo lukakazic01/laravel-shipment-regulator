@@ -7,6 +7,7 @@ use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
 use App\Models\ShipmentDocument;
 use App\Models\User;
+use App\Repositories\ShipmentDocumentRepository;
 use App\Repositories\ShipmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -29,7 +30,11 @@ class ShipmentsController extends Controller
         return view('shipments.create', compact('users', 'shipmentStatuses'));
     }
 
-    public function store(CreateShipmentRequest $request, ShipmentRepository $shipmentRepository)
+    public function store(
+        CreateShipmentRequest $request,
+        ShipmentRepository $shipmentRepository,
+        ShipmentDocumentRepository $shipmentDocumentRepository
+    )
     {
         $shipment = $shipmentRepository->createShipment($request);
         $docMimes = [
@@ -41,19 +46,13 @@ class ShipmentsController extends Controller
             if (str_starts_with($document->getMimeType(), 'image/')) {
                 $name = $this->uploadImage($document, "/documents/$shipment->id/");
                 $name = '/' . $shipment->id . '/' . $name;
-                ShipmentDocument::query()->create([
-                    'shipment_id' => $shipment->id,
-                    'document_name' => $name,
-                ]);
+                $shipmentDocumentRepository->createShipmentDocument($shipment->id, $name);
             } else if (in_array($document->getMimeType(), $docMimes)) {
                 $extension = $document->extension();
                 $name= uniqid() . "." . $extension;
                 $path = $document->storeAs("documents/$shipment->id", $name, "public");
                 $path = str_replace("documents/", "/", $path);
-                ShipmentDocument::query()->create([
-                    'shipment_id' => $shipment->id,
-                    'document_name' => $path,
-                ]);
+                $shipmentDocumentRepository->createShipmentDocument($shipment->id, $path);
             }
         }
         return redirect()->route('shipments.index');
