@@ -6,7 +6,7 @@
         <a href="{{ route('shipments.show', $shipment->id) }}"
            class="font-semibold text-primary">{{ $shipment->title }}</a>
         <span class="shrink-0 text-xs font-semibold px-2.5 py-1 rounded capitalize bg-green-200 text-green-600">
-            {{ ucfirst($shipment->status) }}
+            {{ implode(' ', explode('_', ucfirst($shipment->status))) }}
         </span>
     </div>
 
