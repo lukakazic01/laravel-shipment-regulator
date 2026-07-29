@@ -161,6 +161,9 @@ return [
     |
     */
 
-    'features' => [ Features::registration() ],
+    'features' => [
+        Features::registration(),
+        Features::updateProfileInformation()
+    ],
 
 ];
