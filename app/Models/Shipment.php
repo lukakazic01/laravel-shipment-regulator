@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Table(name: 'shipments')]
 #[Fillable('user_id', 'title', 'from_city', 'from_country', 'to_city', 'to_country', 'price', 'status', 'details')]
@@ -32,6 +33,10 @@ class Shipment extends Model
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function shipmentDocuments(): HasMany {
+        return $this->hasMany(ShipmentDocument::class, 'shipment_id', 'id');
     }
 
     protected function status(): Attribute {

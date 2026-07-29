@@ -1,8 +1,8 @@
-<a href="{{ route('shipments.show', $shipment->id) }}"
-   {{ $attributes->class(["bg-secondary/90  rounded shadow-md shadow-secondary/5 p-6 cursor-pointer block"]) }}
+<div
+   {{ $attributes->class(["bg-secondary/90  rounded shadow-md shadow-secondary/5 p-6"]) }}
 >
     <div class="flex items-start justify-between gap-4">
-        <h3 class="font-semibold text-primary">{{ $shipment->title }}</h3>
+        <a href="{{ route('shipments.show', $shipment->id) }}" class="font-semibold text-primary">{{ $shipment->title }}</a>
         <span class="shrink-0 text-xs font-semibold px-2.5 py-1 rounded capitalize bg-green-200 text-green-600">
             {{ $shipment->status }}
         </span>
@@ -22,4 +22,15 @@
         <span class="text-lg font-semibold text-primary">${{ number_format($shipment->price) }}</span>
         <span class="text-xs text-white/50">{{ $shipment->created_at->format('M d, Y') }}</span>
     </div>
-</a>
+    @if($shipment->shipmentDocuments && $shipment->shipmentDocuments->isNotEmpty())
+        <div class="mt-5 flex items-center gap-2">
+            @foreach($shipment->shipmentDocuments as $document)
+                <a
+                    href="{{ url("/documents$document->document_name") }}"
+                    class="text-sm font-semibold text-primary">
+                        {{ last(explode('/', $document->document_name)) }}
+                </a>
+            @endforeach
+        </div>
+    @endif
+</div>

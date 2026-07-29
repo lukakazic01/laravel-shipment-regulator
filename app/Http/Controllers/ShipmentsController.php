@@ -17,7 +17,7 @@ class ShipmentsController extends Controller
     public function index(ShipmentRepository $shipmentRepository)
     {
         $shipments = Shipment::query()->hydrate(
-            Cache::remember('unassigned_shipments', 600, fn () => $shipmentRepository->getShipmentsByStatus(Shipment::STATUS_UNASSIGNED)->toArray())
+            Cache::remember('unassigned_shipments', 600, fn () => $shipmentRepository->getShipmentsOfAuthenticatedUser()->toArray())
         );
         return view('shipments.index', compact('shipments'));
     }
@@ -57,6 +57,7 @@ class ShipmentsController extends Controller
 
     public function show(Shipment $shipment)
     {
+        $shipment->load('shipmentDocuments');
         return view('shipments.show', compact('shipment'));
     }
 
