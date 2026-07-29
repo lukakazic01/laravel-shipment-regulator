@@ -36,7 +36,7 @@ class Shipment extends Model
     {
         static::created(function ($shipment) {
             if (self::STATUS_IN_PROGRESS === $shipment->status) {
-                Cache::forget('in_progress_shipments');
+                Cache::forget('unassigned_shipments');
             }
         });
     }
