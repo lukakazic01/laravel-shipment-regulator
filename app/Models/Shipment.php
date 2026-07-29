@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Cache;
 
 #[Table(name: 'shipments')]
 #[Fillable('user_id', 'title', 'from_city', 'from_country', 'to_city', 'to_country', 'price', 'status', 'details')]
@@ -30,6 +31,15 @@ class Shipment extends Model
         self::STATUS_PROBLEM,
         self::STATUS_IN_PROGRESS
     ];
+
+    public static function booted(): void
+    {
+        static::created(function ($shipment) {
+            if (self::STATUS_IN_PROGRESS === $shipment->status) {
+                Cache::forget('in_progress_shipments');
+            }
+        });
+    }
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id', 'id');
