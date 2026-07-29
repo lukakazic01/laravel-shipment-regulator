@@ -20,12 +20,15 @@
         </nav>
 
         @auth
-            <form method="POST" action="{{ route('logout') }}" class="flex items-center gap-4">
-                @csrf
-                <button type="submit" class="font-medium text-primary hover:text-[#FF7F1F] transition-colors">
-                    Log out
-                </button>
-            </form>
+            <div class="flex items-center gap-4">
+                <a href="{{ route('profile.index') }}" class="font-medium text-primary hover:text-[#FF7F1F] transition-colors">Profile</a>
+                <form method="POST" action="{{ route('logout') }}" class="flex items-center gap-4">
+                    @csrf
+                    <button type="submit" class="font-medium text-primary hover:text-[#FF7F1F] transition-colors">
+                        Log out
+                    </button>
+                </form>
+            </div>
         @else
             <div class="flex items-center gap-4">
                 <a href="{{ route('register') }}"
