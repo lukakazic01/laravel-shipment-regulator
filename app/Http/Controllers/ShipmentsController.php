@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Helpers\SelectOptions;
 use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
+use App\Models\ShipmentDocument;
 use App\Models\User;
 use App\Repositories\ShipmentRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
-use JetBrains\PhpStorm\NoReturn;
 
 class ShipmentsController extends Controller
 {
@@ -30,7 +29,6 @@ class ShipmentsController extends Controller
         return view('shipments.create', compact('users', 'shipmentStatuses'));
     }
 
-    #[NoReturn]
     public function store(CreateShipmentRequest $request, ShipmentRepository $shipmentRepository)
     {
         $shipment = $shipmentRepository->createShipment($request);
@@ -45,7 +43,12 @@ class ShipmentsController extends Controller
             } else if (in_array($document->getMimeType(), $docMimes)) {
                 $extension = $document->extension();
                 $name= uniqid() . "." . $extension;
-                $document->storeAs("documents/$shipment->id", $name, "public");
+                $path = $document->storeAs("documents/$shipment->id", $name, "public");
+                $path = str_replace("documents/", "/", $path);
+                ShipmentDocument::query()->create([
+                    'shipment_id' => $shipment->id,
+                    'document_name' => $path,
+                ]);
             }
         }
         Cache::forget('unassigned_shipments');
