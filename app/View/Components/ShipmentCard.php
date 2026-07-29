@@ -17,4 +17,13 @@ class ShipmentCard extends Component
     {
         return view('components.shipment-card');
     }
+
+    public static function iconBasedOnFileExtension(string $extension): string
+    {
+        return match ($extension) {
+            'pdf' => 'fa-file-pdf',
+            'doc', 'docx' => 'fa-file-word',
+            default => 'fa-file-image',
+        };
+    }
 }
