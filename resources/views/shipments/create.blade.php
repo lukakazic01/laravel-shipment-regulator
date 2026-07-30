@@ -29,13 +29,8 @@
             <x-forms.error-message/>
         </x-forms.field>
         <x-forms.field required name="status">
-            <x-forms.label>To country</x-forms.label>
+            <x-forms.label>Status</x-forms.label>
             <x-forms.select :values="$shipmentStatuses" :selected="Shipment::STATUS_UNASSIGNED"/>
-            <x-forms.error-message/>
-        </x-forms.field>
-        <x-forms.field required name="trucker_id">
-            <x-forms.label>Trucker</x-forms.label>
-            <x-forms.select :values="$users" />
             <x-forms.error-message/>
         </x-forms.field>
         <x-forms.field required name="client_id">

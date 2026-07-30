@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\Shipment;
+use App\Rules\UserClient;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -31,6 +32,11 @@ class CreateShipmentRequest extends FormRequest
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
             'status' => Rule::in(Shipment::SHIPMENT_STATUSES),
+            'client_id' => [
+                'required',
+                'integer',
+                new UserClient,
+            ],
             'documents' => 'required|array',
             'documents.*' => 'file|mimes:jpeg,png,jpg,webp,docx,pdf,doc|max:10240',
         ];
