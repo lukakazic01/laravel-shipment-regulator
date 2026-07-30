@@ -48,4 +48,7 @@
             </div>
         </div>
     @endif
+    <div class="mt-5 flex justify-end">
+        <a href="{{ route('shipments.edit', $shipment->id) }}" type="submit" class="text-sm font-semibold text-primary">Edit</a>
+    </div>
 </div>
