@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Shipment;
 use App\Models\User;
+use App\Rules\UserTrucker;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -29,9 +30,7 @@ class UpdateShipmentRequest extends FormRequest
             'user_id' => [
                 'integer',
                 'required',
-                Rule::exists('users', 'id')->where(function ($query) {
-                    return $query->where('role', User::ROLE_TRUCKER);
-                })
+                new UserTrucker
             ],
             'status' => [
                 Rule::in(Shipment::SHIPMENT_STATUSES),
