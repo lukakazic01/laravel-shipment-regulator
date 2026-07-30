@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\SelectOptions;
 use App\Http\Requests\CreateShipmentRequest;
 use App\Http\Requests\UpdateShipmentRequest;
+use App\Mappers\SelectOptionsMapper;
 use App\Models\Shipment;
 use App\Models\User;
 use App\Repositories\ShipmentRepository;
@@ -24,8 +24,8 @@ class ShipmentsController extends Controller
 
     public function create()
     {
-        $users = SelectOptions::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
-        $shipmentStatuses = SelectOptions::toSelectOptions(Shipment::SHIPMENT_STATUSES);
+        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
+        $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
         return view('shipments.create', compact('users', 'shipmentStatuses'));
     }
 
@@ -48,7 +48,7 @@ class ShipmentsController extends Controller
 
     public function edit(Shipment $shipment)
     {
-        $shipmentStatuses = SelectOptions::toSelectOptions(Shipment::SHIPMENT_STATUSES);
+        $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
         return view('shipments.edit', compact('shipment', 'shipmentStatuses'));
     }
 

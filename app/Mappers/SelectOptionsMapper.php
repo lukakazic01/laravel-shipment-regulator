@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Helpers;
+namespace App\Mappers;
 
 use Illuminate\Support\Collection;
 
-class SelectOptions
+class SelectOptionsMapper
 {
 
     public static function toSelectOptions(array $values, string|int|null $label = null, string|int|null $value = null): Collection {
