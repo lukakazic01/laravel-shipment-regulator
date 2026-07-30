@@ -5,7 +5,6 @@ namespace App\Repositories;
 use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 
 class ShipmentRepository
 {

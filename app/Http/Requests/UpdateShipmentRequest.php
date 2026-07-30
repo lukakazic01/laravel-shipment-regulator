@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Models\Shipment;
-use App\Models\User;
 use App\Rules\UserClient;
 use App\Rules\UserTrucker;
 use Illuminate\Contracts\Validation\ValidationRule;
