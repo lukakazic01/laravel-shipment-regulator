@@ -36,12 +36,12 @@
         </x-forms.field>
         <x-forms.field required name="user_id">
             <x-forms.label>Trucker</x-forms.label>
-            <x-forms.select :values="$users"/>
+            <x-forms.select :values="$users" :selected="$shipment->user_id"/>
             <x-forms.error-message/>
         </x-forms.field>
         <x-forms.field required name="client_id">
             <x-forms.label>Client</x-forms.label>
-            <x-forms.select :values="$users"/>
+            <x-forms.select :values="$users" :selected="$shipment->client_id" />
             <x-forms.error-message/>
         </x-forms.field>
         <x-forms.field required name="price">

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\Models\Shipment;
 use App\Models\User;
+use App\Rules\UserClient;
 use App\Rules\UserTrucker;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
@@ -32,6 +33,11 @@ class UpdateShipmentRequest extends FormRequest
                 'required',
                 new UserTrucker
             ],
+            'client_id' => [
+                'integer',
+                'required',
+                new UserClient
+            ],
             'status' => [
                 Rule::in(Shipment::SHIPMENT_STATUSES),
                 Rule::when(
@@ -45,7 +51,6 @@ class UpdateShipmentRequest extends FormRequest
     public function messages(): array {
         return [
             'status.not_in' => 'Status cannot be unassigned when the user is filled',
-            'user_id.exists' => 'You must assign to a user that is a trucker'
         ];
     }
 }

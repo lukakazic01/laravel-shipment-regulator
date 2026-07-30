@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 #[Table(name: 'shipments')]
-#[Fillable('user_id', 'title', 'from_city', 'from_country', 'to_city', 'to_country', 'price', 'status', 'details')]
+#[Fillable('user_id', 'client_id', 'title', 'from_city', 'from_country', 'to_city', 'to_country', 'price', 'status', 'details')]
 #[UseFactory(ShipmentFactory::class)]
 #[ObservedBy(ShipmentObserver::class)]
 class Shipment extends Model
