@@ -29,7 +29,7 @@ class ShipmentPolicy
      */
     public function create(User $user): bool
     {
-        return auth()->user()->role === User::ROLE_ADMINISTRATOR;
+        return $user->role === User::ROLE_ADMINISTRATOR;
     }
 
     /**
@@ -62,5 +62,9 @@ class ShipmentPolicy
     public function forceDelete(User $user, Shipment $shipment): bool
     {
         return false;
+    }
+
+    public function viewCreateShipmentPage(User $user): bool {
+        return $user->role === User::ROLE_ADMINISTRATOR;
     }
 }

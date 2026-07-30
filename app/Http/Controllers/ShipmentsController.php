@@ -23,7 +23,7 @@ class ShipmentsController extends Controller
         return view('shipments.index', compact('shipments'));
     }
 
-    #[Authorize('create', Shipment::class)]
+    #[Authorize('view-create-shipment-page', Shipment::class)]
     public function create()
     {
         $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
