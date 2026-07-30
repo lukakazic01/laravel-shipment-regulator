@@ -34,6 +34,11 @@
             <x-forms.select :values="$shipmentStatuses" :selected="$shipment->status"/>
             <x-forms.error-message/>
         </x-forms.field>
+        <x-forms.field required name="user_id">
+            <x-forms.label>Trucker</x-forms.label>
+            <x-forms.select :values="$users"/>
+            <x-forms.error-message/>
+        </x-forms.field>
         <x-forms.field required name="price">
             <x-forms.label>Price</x-forms.label>
             <x-forms.input type="number" :value="old('price', $shipment->price)"/>

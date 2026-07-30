@@ -49,7 +49,8 @@ class ShipmentsController extends Controller
     public function edit(Shipment $shipment)
     {
         $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
-        return view('shipments.edit', compact('shipment', 'shipmentStatuses'));
+        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
+        return view('shipments.edit', compact('shipment', 'shipmentStatuses', 'users'));
     }
 
     public function update(UpdateShipmentRequest $request, Shipment $shipment)
