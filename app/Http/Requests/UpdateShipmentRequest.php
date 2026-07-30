@@ -25,7 +25,7 @@ class UpdateShipmentRequest extends FormRequest
             'to_country' => 'string|required|max:64|min:1',
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
-            'user_id' => 'integer|required|exists:users,id',
+            'user_id' => 'integer|required|exists:users,id,role,trucker',
             'status' => [
                 Rule::in(Shipment::SHIPMENT_STATUSES),
                 Rule::when(
@@ -38,7 +38,8 @@ class UpdateShipmentRequest extends FormRequest
 
     public function messages(): array {
         return [
-            'status.not_in' => 'Status cannot be unassigned when the user is filled'
+            'status.not_in' => 'Status cannot be unassigned when the user is filled',
+            'user_id.exists' => 'You must assign to a user that is a trucker'
         ];
     }
 }
