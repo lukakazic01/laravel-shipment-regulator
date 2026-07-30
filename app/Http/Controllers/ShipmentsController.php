@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\IsAdministrator;
 use App\Http\Requests\CreateShipmentRequest;
 use App\Http\Requests\UpdateShipmentRequest;
 use App\Mappers\SelectOptionsMapper;
@@ -9,6 +10,7 @@ use App\Models\Shipment;
 use App\Models\User;
 use App\Repositories\ShipmentRepository;
 use App\Services\ShipmentDocumentService;
+use Illuminate\Routing\Attributes\Controllers\Middleware;
 use Illuminate\Support\Facades\Cache;
 
 class ShipmentsController extends Controller
@@ -22,6 +24,7 @@ class ShipmentsController extends Controller
         return view('shipments.index', compact('shipments'));
     }
 
+    #[Middleware(IsAdministrator::class)]
     public function create()
     {
         $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
@@ -29,6 +32,7 @@ class ShipmentsController extends Controller
         return view('shipments.create', compact('users', 'shipmentStatuses'));
     }
 
+    #[Middleware(IsAdministrator::class)]
     public function store(
         CreateShipmentRequest $request,
         ShipmentRepository $shipmentRepository,
