@@ -36,7 +36,9 @@ class ShipmentsController extends Controller
     )
     {
         $shipment = $shipmentRepository->createShipment($request);
-        $shipmentDocumentService->storeShipmentDocuments($shipment, $request->file('documents'));
+        if ($request->hasFile('documents')) {
+            $shipmentDocumentService->storeShipmentDocuments($shipment, $request->file('documents'));
+        }
         return redirect()->route('shipments.index');
     }
 
