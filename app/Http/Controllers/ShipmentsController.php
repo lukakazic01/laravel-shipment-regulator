@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Helpers\SelectOptions;
 use App\Http\Requests\CreateShipmentRequest;
+use App\Http\Requests\UpdateShipmentRequest;
 use App\Models\Shipment;
 use App\Models\User;
 use App\Repositories\ShipmentRepository;
 use App\Services\ShipmentDocumentService;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class ShipmentsController extends Controller
@@ -52,9 +52,10 @@ class ShipmentsController extends Controller
         return view('shipments.edit', compact('shipment', 'shipmentStatuses'));
     }
 
-    public function update(Request $request, Shipment $shipment)
+    public function update(UpdateShipmentRequest $request, Shipment $shipment)
     {
-        dd($request->all());
+        $shipment->update($request->validated());
+        return redirect()->route('shipments.index');
     }
 
     public function destroy(Shipment $shipment)
