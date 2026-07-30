@@ -25,7 +25,20 @@ class UpdateShipmentRequest extends FormRequest
             'to_country' => 'string|required|max:64|min:1',
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
-            'status' => Rule::in(Shipment::SHIPMENT_STATUSES),
+            'user_id' => 'integer|required|exists:users,id',
+            'status' => [
+                Rule::in(Shipment::SHIPMENT_STATUSES),
+                Rule::when(
+                    $this->filled('user_id'),
+                    Rule::notIn(Shipment::STATUS_UNASSIGNED)
+                )
+            ],
+        ];
+    }
+
+    public function messages(): array {
+        return [
+            'status.not_in' => 'Status cannot be unassigned when the user is filled'
         ];
     }
 }
