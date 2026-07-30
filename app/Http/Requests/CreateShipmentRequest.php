@@ -31,7 +31,7 @@ class CreateShipmentRequest extends FormRequest
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
             'status' => Rule::in(Shipment::SHIPMENT_STATUSES),
-            'documents' => 'array',
+            'documents' => 'required|array',
             'documents.*' => 'file|mimes:jpeg,png,jpg,webp,docx,pdf,doc|max:10240',
         ];
     }

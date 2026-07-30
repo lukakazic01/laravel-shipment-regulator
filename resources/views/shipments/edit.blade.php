@@ -3,6 +3,7 @@
     <x-slot:title>Edit shipment</x-slot:title>
     <form method="POST" action="{{ route('shipments.update', $shipment->id) }}" enctype="multipart/form-data" class="flex flex-col gap-4">
         @csrf
+        @method('PATCH')
         <x-forms.field required name="title">
             <x-forms.label>Title</x-forms.label>
             <x-forms.input :value="old('title', $shipment->title)"/>
