@@ -31,11 +31,5 @@
             @endforeach
             </tbody>
         </table>
-
-        @if ($users->isEmpty())
-            <div class="px-6 py-10 text-center text-sm text-secondary/50">
-                No users found.
-            </div>
-        @endif
     </div>
 </x-layout>
