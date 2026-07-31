@@ -75,7 +75,7 @@ class ShipmentsController extends Controller
     #[Authorize('update-trucker', 'shipment')]
     public function assignTrucker (Request $request,Shipment $shipment) {
         $validated = $request->validate([
-            'user_id' => [
+            "user_id_shipment_$shipment->id" => [
                 'required',
                 'integer',
                 new UserTrucker

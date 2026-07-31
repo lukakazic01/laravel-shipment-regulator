@@ -32,7 +32,7 @@
             <form method="POST" action="{{ route('shipments.assign-trucker', $shipment->id) }}">
                 @csrf
                 @method('PATCH')
-                <x-forms.field required name="user_id">
+                <x-forms.field required name="user_id_shipment_{{ $shipment->id }}">
                     <x-forms.label>Trucker</x-forms.label>
                     <x-forms.select :values="$users" />
                     <x-forms.error-message/>
