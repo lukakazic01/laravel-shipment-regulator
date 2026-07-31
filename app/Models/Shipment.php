@@ -6,8 +6,10 @@ use App\Observers\ShipmentObserver;
 use Database\Factories\ShipmentFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Attributes\Table;
 use Illuminate\Database\Eloquent\Attributes\UseFactory;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,5 +48,11 @@ class Shipment extends Model
         return Attribute::make(
             set: fn (string $value) => in_array($value, self::SHIPMENT_STATUSES, true) ? $value : self::STATUS_UNASSIGNED,
         );
+    }
+
+    #[Scope]
+    protected function byStatus(Builder $query, string $status): Builder
+    {
+        return static::query()->where('status', $status);
     }
 }

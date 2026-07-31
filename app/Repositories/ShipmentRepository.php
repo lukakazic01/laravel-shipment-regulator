@@ -22,7 +22,7 @@ class ShipmentRepository
     }
 
     public function getShipmentsByStatus(string $status): Collection {
-        return Shipment::query()->where('status', $status)->get();
+        return Shipment::byStatus($status)->get();
     }
 
     /**
