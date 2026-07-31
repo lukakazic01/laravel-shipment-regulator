@@ -46,8 +46,9 @@ class ShipmentsController extends Controller
     #[Authorize('view', 'shipment')]
     public function show(Shipment $shipment)
     {
+        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
         $shipment->load('shipmentDocuments');
-        return view('shipments.show', compact('shipment'));
+        return view('shipments.show', compact('shipment', 'users'));
     }
 
     #[Authorize('view-edit-shipment-page', Shipment::class)]

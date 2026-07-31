@@ -33,7 +33,6 @@
 
         <div class="px-6 py-5 border-b border-gray-100">
             <p class="text-sm text-secondary/70 leading-relaxed">{{ $shipment->details }}</p>
-
             <div class="mt-4 flex items-center justify-between">
                 <span class="text-2xl font-semibold text-primary">${{ $shipment->price }}</span>
                 <span class="text-xs text-secondary/50">Created {{ $shipment->created_at->format('M d, Y') }}</span>
@@ -46,27 +45,45 @@
                 <div class="flex flex-wrap gap-2">
                     @foreach($shipment->shipmentDocuments as $document)
                         <a
-                        href="{{ url("/storage/documents$document->document_name") }}"
-                        target="_blank"
-                        class="group flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 transition-colors hover:border-primary/40 hover:bg-white"
+                            href="{{ url("/storage/documents$document->document_name") }}"
+                            target="_blank"
+                            class="group flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 transition-colors hover:border-primary/40 hover:bg-white"
                         >
-                        <i class="fa-solid text-gray-500 group-hover:text-primary transition-colors
-                            {{ ShipmentCard::iconBasedOnFileExtension(last(explode('.', $document->document_name))) }}"
-                        ></i>
-                        <span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors truncate max-w-[10rem]">
-                            {{ last(explode('/', $document->document_name)) }}
-                        </span>
+                            <i class="fa-solid text-gray-500 group-hover:text-primary transition-colors
+                                {{ ShipmentCard::iconBasedOnFileExtension(last(explode('.', $document->document_name))) }}"
+                            ></i>
+                            <span class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors truncate max-w-[10rem]">
+                                {{ last(explode('/', $document->document_name)) }}
+                            </span>
                         </a>
                     @endforeach
                 </div>
             </div>
         @endif
 
+        <div class="px-6 py-5 border-b border-gray-100">
+            <h3 class="text-xs font-semibold text-secondary/50 uppercase tracking-wide mb-3">Trucker</h3>
+            <form method="POST">
+                @csrf
+                @method('PATCH')
+                <x-forms.field required name="trucker_id">
+                    <x-forms.label>Trucker</x-forms.label>
+                    <x-forms.select :values="$users" :selected="$shipment?->user_id" />
+                    <x-forms.error-message/>
+                </x-forms.field>
+                <div class="mt-3 flex justify-end">
+                    <x-base-button type="submit">
+                        Save
+                    </x-base-button>
+                </div>
+            </form>
+        </div>
+
         @can('view-edit-shipment-page', $shipment)
             <div class="px-6 py-4 flex justify-end">
                 <a
                     href="{{ route('shipments.edit', $shipment->id) }}"
-                    class="text-sm font-semibold text-white bg-primary px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors"
+                    class="text-primary text-sm font-semibold"
                 >
                     Edit shipment
                 </a>
