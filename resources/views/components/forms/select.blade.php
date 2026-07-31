@@ -12,6 +12,7 @@
             ])
     }}
 >
+    <option disabled selected>None</option>
     @foreach ($values as $option)
         <option value="{{ $option['value'] }}" @selected(old($name, $selected ?? '') == $option['value'])>
             {{ $option['label'] }}

@@ -26,21 +26,23 @@
         <span class="text-lg font-semibold text-primary">${{ number_format($shipment->price) }}</span>
         <span class="text-xs text-secondary/50">{{ $shipment->created_at->format('M d, Y') }}</span>
     </div>
-    <h3 class="text-xs font-semibold text-secondary/50 uppercase tracking-wide mb-3">Trucker</h3>
-    <form method="POST">
-        @csrf
-        @method('PATCH')
-        <x-forms.field required name="trucker_id">
-            <x-forms.label>Trucker</x-forms.label>
-            <x-forms.select :values="$users" :selected="$shipment?->user_id" />
-            <x-forms.error-message/>
-        </x-forms.field>
-        <div class="mt-3 flex justify-end">
-            <x-base-button type="submit">
-                Save
-            </x-base-button>
-        </div>
-    </form>
+    <div class="mt-5">
+        <h3 class="text-xs font-semibold text-secondary/50 uppercase tracking-wide mb-3">Assign Trucker</h3>
+        <form method="POST">
+            @csrf
+            @method('PATCH')
+            <x-forms.field required name="trucker_id">
+                <x-forms.label>Trucker</x-forms.label>
+                <x-forms.select :values="$users" />
+                <x-forms.error-message/>
+            </x-forms.field>
+            <div class="mt-3">
+                <x-base-button type="submit" class="w-40 max-w-40">
+                    Save
+                </x-base-button>
+            </div>
+        </form>
+    </div>
     @canany(['view-edit-shipment-page', 'view'], $shipment)
         <div class="mt-5 flex items-center gap-6 justify-end">
             @can('view-edit-shipment-page', $shipment)
