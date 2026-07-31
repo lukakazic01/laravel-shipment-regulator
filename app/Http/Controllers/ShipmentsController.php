@@ -8,7 +8,9 @@ use App\Mappers\SelectOptionsMapper;
 use App\Models\Shipment;
 use App\Models\User;
 use App\Repositories\ShipmentRepository;
+use App\Rules\UserTrucker;
 use App\Services\ShipmentDocumentService;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
 use Illuminate\Support\Facades\Cache;
 
@@ -70,7 +72,16 @@ class ShipmentsController extends Controller
         //
     }
 
-    public function saveTrucker (Shipment $shipment) {
-
+    #[Authorize('update-trucker', 'shipment')]
+    public function assignTrucker (Request $request,Shipment $shipment) {
+        $validated = $request->validate([
+            'user_id' => [
+                'required',
+                'integer',
+                new UserTrucker
+            ]
+        ]);
+        $shipment->update($validated);
+        return redirect()->route('shipments.index');
     }
 }

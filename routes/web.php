@@ -13,4 +13,6 @@ Route::controller(ProfileController::class)->name('profile.')->prefix('/profile'
     Route::put('/', 'changeAvatar')->name('change-avatar');
 });
 
+Route::patch('/shipments/{shipment}/assign-trucker', [ShipmentsController::class, 'assignTrucker'])->name('shipments.assign-trucker');
+
 Route::resource('shipments', ShipmentsController::class);
