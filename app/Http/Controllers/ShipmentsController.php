@@ -43,6 +43,7 @@ class ShipmentsController extends Controller
         return redirect()->route('shipments.index');
     }
 
+    #[Authorize('view', 'shipment')]
     public function show(Shipment $shipment)
     {
         $shipment->load('shipmentDocuments');

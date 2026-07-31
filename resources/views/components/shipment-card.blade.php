@@ -1,13 +1,11 @@
 @php
-    use App\Models\Shipment;
     use App\View\Components\ShipmentCard;
 @endphp
 <div
     {{ $attributes->class(["bg-white rounded border border-gray-200 p-6"]) }}
 >
     <div class="flex items-start justify-between gap-4">
-        <a href="{{ route('shipments.show', $shipment->id) }}"
-           class="font-semibold text-primary">{{ $shipment->title }}</a>
+        <h3 class="font-semibold text-primary">{{ $shipment->title }}</h3>
         <span class="shrink-0 text-xs font-semibold px-2.5 py-1 rounded capitalize bg-green-200 text-green-600">
             {{ implode(' ', explode('_', ucfirst($shipment->status))) }}
         </span>
@@ -52,10 +50,14 @@
             </div>
         </div>
     @endif
-    @can('view-edit-shipment-page', Shipment::class)
-        <div class="mt-5 flex justify-end">
-            <a href="{{ route('shipments.edit', $shipment->id) }}" type="submit"
-               class="text-sm font-semibold text-primary">Edit</a>
+    @canany(['view-edit-shipment-page', 'view'], $shipment)
+        <div class="mt-5 flex items-center gap-6 justify-end">
+            @can('view-edit-shipment-page', $shipment)
+                <a href="{{ route('shipments.edit', $shipment->id) }}" class="text-sm font-semibold text-primary">Edit</a>
+            @endcan
+            @can('view', $shipment)
+                <a href="{{ route('shipments.show', $shipment->id) }}" class="text-sm font-semibold text-primary">Show</a>
+            @endcan
         </div>
-    @endcan
+    @endcanany
 </div>
