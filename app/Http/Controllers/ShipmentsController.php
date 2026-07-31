@@ -20,7 +20,8 @@ class ShipmentsController extends Controller
         $shipments = Shipment::query()->hydrate(
             Cache::remember('unassigned_shipments', 600, fn () => $shipmentRepository->getShipmentsByStatus(Shipment::STATUS_UNASSIGNED)->toArray())
         );
-        return view('shipments.index', compact('shipments'));
+        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
+        return view('shipments.index', compact('shipments', 'users'));
     }
 
     #[Authorize('view-create-shipment-page', Shipment::class)]
@@ -46,9 +47,8 @@ class ShipmentsController extends Controller
     #[Authorize('view', 'shipment')]
     public function show(Shipment $shipment)
     {
-        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
         $shipment->load('shipmentDocuments');
-        return view('shipments.show', compact('shipment', 'users'));
+        return view('shipments.show', compact('shipment'));
     }
 
     #[Authorize('view-edit-shipment-page', Shipment::class)]
@@ -68,5 +68,9 @@ class ShipmentsController extends Controller
     public function destroy(Shipment $shipment)
     {
         //
+    }
+
+    public function saveTrucker (Shipment $shipment) {
+
     }
 }

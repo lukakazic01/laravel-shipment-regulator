@@ -61,24 +61,6 @@
             </div>
         @endif
 
-        <div class="px-6 py-5 border-b border-gray-100">
-            <h3 class="text-xs font-semibold text-secondary/50 uppercase tracking-wide mb-3">Trucker</h3>
-            <form method="POST">
-                @csrf
-                @method('PATCH')
-                <x-forms.field required name="trucker_id">
-                    <x-forms.label>Trucker</x-forms.label>
-                    <x-forms.select :values="$users" :selected="$shipment?->user_id" />
-                    <x-forms.error-message/>
-                </x-forms.field>
-                <div class="mt-3 flex justify-end">
-                    <x-base-button type="submit">
-                        Save
-                    </x-base-button>
-                </div>
-            </form>
-        </div>
-
         @can('view-edit-shipment-page', $shipment)
             <div class="px-6 py-4 flex justify-end">
                 <a

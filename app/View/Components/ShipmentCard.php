@@ -5,12 +5,19 @@ namespace App\View\Components;
 use App\Models\Shipment;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
 class ShipmentCard extends Component
 {
+
+    /**
+     * @param Shipment $shipment
+     * @param Collection<int, array{label: string|int, value:string|int}> $users
+     */
     public function __construct(
         public Shipment $shipment,
+        public Collection $users
     ){}
 
     public function render(): View|Closure|string
