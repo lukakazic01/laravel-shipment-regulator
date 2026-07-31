@@ -7,19 +7,17 @@ use Illuminate\Support\Facades\Cache;
 
 class ShipmentObserver
 {
-    public function creating(Shipment $shipment): void {
+    public function created(Shipment $shipment): void {
         if ($shipment::STATUS_UNASSIGNED === $shipment->status) {
             Cache::forget('unassigned_shipments');
         }
     }
 
-    public function updating(Shipment $shipment): void {
-        if($shipment::STATUS_IN_PROGRESS === $shipment->status) {
-            Cache::forget('unassigned_shipments');
-        }
+    public function updated(): void {
+        Cache::forget('unassigned_shipments');
     }
 
-    public function deleting(): void {
+    public function deleted(): void {
         Cache::forget('unassigned_shipments');
     }
 }
