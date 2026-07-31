@@ -4,12 +4,12 @@ namespace App\Services;
 
 use App\Models\Shipment;
 use App\Repositories\ShipmentDocumentRepository;
-use App\Traits\HandleImages;
+use App\Traits\HandleImagesTrait;
 use Illuminate\Http\UploadedFile;
 
 class ShipmentDocumentService
 {
-    use HandleImages;
+    use HandleImagesTrait;
 
     const array ALLOWED_DOCUMENT_MIME_TYPES = [
         'application/pdf',

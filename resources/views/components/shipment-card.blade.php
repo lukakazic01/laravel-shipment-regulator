@@ -1,4 +1,7 @@
-@php use App\View\Components\ShipmentCard; @endphp
+@php
+    use App\Models\Shipment;
+    use App\View\Components\ShipmentCard;
+@endphp
 <div
     {{ $attributes->class(["bg-white rounded border border-gray-200 p-6"]) }}
 >
@@ -40,7 +43,8 @@
                             {{ShipmentCard::iconBasedOnFileExtension(last(explode('.', $document->document_name)))}}"
                         >
                         </i>
-                        <span class="text-sm font-medium transition-colors text-gray-700 group-hover:text-primary/50 truncate max-w-40">
+                        <span
+                            class="text-sm font-medium transition-colors text-gray-700 group-hover:text-primary/50 truncate max-w-40">
                             {{ last(explode('/', $document->document_name)) }}
                         </span>
                     </a>
@@ -48,7 +52,10 @@
             </div>
         </div>
     @endif
-    <div class="mt-5 flex justify-end">
-        <a href="{{ route('shipments.edit', $shipment->id) }}" type="submit" class="text-sm font-semibold text-primary">Edit</a>
-    </div>
+    @can('view-edit-shipment-page', Shipment::class)
+        <div class="mt-5 flex justify-end">
+            <a href="{{ route('shipments.edit', $shipment->id) }}" type="submit"
+               class="text-sm font-semibold text-primary">Edit</a>
+        </div>
+    @endcan
 </div>

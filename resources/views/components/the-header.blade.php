@@ -17,7 +17,7 @@
         <nav class="hidden sm:flex items-center gap-8 text-sm font-medium text-slate-300">
             <a href="{{ route('home') }}" class="hover:text-white transition-colors">Home</a>
             <a href="{{ route('shipments.index') }}" class="hover:text-white transition-colors">Shipments</a>
-            @can('create', Shipment::class)
+            @can('view-create-shipment-page', Shipment::class)
                 <a href="{{ route('shipments.create') }}" class="hover:text-white transition-colors">Create shipment</a>
             @endcan
         </nav>

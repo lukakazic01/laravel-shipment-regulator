@@ -49,6 +49,7 @@ class ShipmentsController extends Controller
         return view('shipments.show', compact('shipment'));
     }
 
+    #[Authorize('view-edit-shipment-page', Shipment::class)]
     public function edit(Shipment $shipment)
     {
         $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);

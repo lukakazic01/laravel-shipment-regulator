@@ -67,4 +67,8 @@ class ShipmentPolicy
     public function viewCreateShipmentPage(User $user): bool {
         return $user->role === User::ROLE_ADMINISTRATOR;
     }
+
+    public function viewEditShipmentPage(User $user): bool {
+        return $user->role === User::ROLE_ADMINISTRATOR;
+    }
 }

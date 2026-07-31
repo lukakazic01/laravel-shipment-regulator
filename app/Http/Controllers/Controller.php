@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Traits\HandleImages;
+use App\Traits\HandleImagesTrait;
 
 abstract class Controller
 {
-    use HandleImages;
+    use HandleImagesTrait;
 }

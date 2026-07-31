@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Intervention\Image\FileExtension;
 use Intervention\Image\Laravel\Facades\Image;
 
-trait HandleImages
+trait HandleImagesTrait
 {
 
     public function uploadImage(string $file, string $path): string
