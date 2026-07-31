@@ -81,7 +81,9 @@ class ShipmentsController extends Controller
                 new UserTrucker
             ]
         ]);
-        $shipment->update($validated);
+        $shipment->user_id = $validated['user_id'];
+        $shipment->status = Shipment::STATUS_IN_PROGRESS;
+        $shipment->save();
         return redirect()->route('shipments.index');
     }
 }
