@@ -71,4 +71,8 @@ class ShipmentPolicy
     public function viewEditShipmentPage(User $user): bool {
         return $user->role === User::ROLE_ADMINISTRATOR;
     }
+
+    public function updateTrucker(User $user, Shipment $shipment): bool {
+        return $shipment->client_id === $user->id;
+    }
 }
