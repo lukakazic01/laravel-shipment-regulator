@@ -25,31 +25,6 @@
         <span class="text-lg font-semibold text-primary">${{ number_format($shipment->price) }}</span>
         <span class="text-xs text-secondary/50">{{ $shipment->created_at->format('M d, Y') }}</span>
     </div>
-    @if($shipment->shipmentDocuments && $shipment->shipmentDocuments->isNotEmpty())
-        <div class="mt-5">
-            <h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-3">
-                Documents
-            </h3>
-            <div class="flex flex-wrap gap-3">
-                @foreach($shipment->shipmentDocuments as $document)
-                    <a
-                        href="{{ url("/storage/documents$document->document_name") }}"
-                        target="_blank"
-                        class="group flex items-center gap-2 rounded border border-transparent bg-white px-3 py-2 shadow-sm transition-colors hover:border-primary/50"
-                    >
-                        <i class="fa-solid group-hover:text-primary/50 transition-colors text-gray-700
-                            {{ShipmentCard::iconBasedOnFileExtension(last(explode('.', $document->document_name)))}}"
-                        >
-                        </i>
-                        <span
-                            class="text-sm font-medium transition-colors text-gray-700 group-hover:text-primary/50 truncate max-w-40">
-                            {{ last(explode('/', $document->document_name)) }}
-                        </span>
-                    </a>
-                @endforeach
-            </div>
-        </div>
-    @endif
     @canany(['view-edit-shipment-page', 'view'], $shipment)
         <div class="mt-5 flex items-center gap-6 justify-end">
             @can('view-edit-shipment-page', $shipment)
