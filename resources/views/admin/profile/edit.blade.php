@@ -1,5 +1,6 @@
 <x-layout>
-    <div class="w-full max-w-sm bg-white rounded-2xl border border-slate-200 shadow-sm">
+    <div class="flex justify-center">
+        <div class="w-full max-w-sm bg-white rounded-2xl border border-slate-200 shadow-sm">
         <div class="px-6 pt-6 pb-5 flex items-center gap-3 border-b border-slate-100">
             <div class="h-11 w-11 rounded-full bg-secondary text-white flex items-center justify-center font-medium text-sm">
                 {{ ucfirst(substr($user->name, 0, 1)) }}
@@ -34,5 +35,6 @@
                 <x-forms.error-message />
             </x-forms.field>
         </form>
+    </div>
     </div>
 </x-layout>
