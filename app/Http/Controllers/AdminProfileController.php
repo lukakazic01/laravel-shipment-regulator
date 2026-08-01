@@ -13,7 +13,9 @@ class AdminProfileController extends Controller
 
     public function index()
     {
-        $users = User::query()->hydrate(Cache::remember('users', 600, fn () => User::all()->toArray()));
+        $users = User::query()->hydrate(
+            Cache::remember('users', 600, fn () => User::all()->toArray())
+        )->reject(fn ($user) => $user->id === auth()->id());
         return view('admin.profile.index', compact('users'));
     }
 
