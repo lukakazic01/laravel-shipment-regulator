@@ -6,6 +6,7 @@
                 <th class="text-left font-semibold text-secondary/50 uppercase tracking-wide text-xs px-6 py-3">Name</th>
                 <th class="text-left font-semibold text-secondary/50 uppercase tracking-wide text-xs px-6 py-3">Email</th>
                 <th class="text-left font-semibold text-secondary/50 uppercase tracking-wide text-xs px-6 py-3">Role</th>
+                <th class="text-left font-semibold text-secondary/50 uppercase tracking-wide text-xs px-6 py-3">Actions</th>
             </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -26,6 +27,11 @@
                         <span class="text-xs font-semibold px-2.5 py-1 rounded capitalize bg-primary/10 text-primary">
                             {{ $user->role }}
                         </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <a href="{{ route('admin.profile.edit', $user->id) }}" class="text-primary font-semibold">
+                            Edit
+                        </a>
                     </td>
                 </tr>
             @endforeach

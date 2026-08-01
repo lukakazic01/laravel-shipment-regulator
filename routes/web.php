@@ -15,6 +15,7 @@ Route::controller(ProfileController::class)->name('profile.')->prefix('/profile'
 Route::controller(AdminProfileController::class)->name('admin.')->prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::prefix('/profile')->name('profile.')->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('{user}/edit', 'edit')->name('edit');
     });
 });
 
