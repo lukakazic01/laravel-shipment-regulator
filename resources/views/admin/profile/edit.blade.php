@@ -31,7 +31,7 @@
             @method('PATCH')
             <x-forms.field name="role" required>
                 <x-forms.label>Roles</x-forms.label>
-                <x-forms.select :values="$roles" />
+                <x-forms.select :values="$roles" :selected="$user->role" />
                 <x-forms.error-message />
             </x-forms.field>
             <x-base-button type="submit" class="w-full mt-4 py-1.5! bg-secondary!">Save role</x-base-button>

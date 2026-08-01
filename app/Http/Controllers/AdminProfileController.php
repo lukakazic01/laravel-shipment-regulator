@@ -6,6 +6,7 @@ use App\Mappers\SelectOptionsMapper;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
 
 class AdminProfileController extends Controller
 {
@@ -22,7 +23,15 @@ class AdminProfileController extends Controller
     }
 
     public function updateRole(Request $request, User $user) {
-        dd($request->all());
+        $validated = $request->validate([
+            'role' => [
+                'required',
+                'string',
+                Rule::in(User::ALLOWED_ROLES),
+            ]
+        ]);
+        $user->forceFill($validated)->save();
+        return redirect()->route('admin.profile.index');
     }
 
 }
