@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function role(): Attribute {
         return Attribute::make(
-            set: fn ($value) => in_array(self::ALLOWED_ROLES, $value) ? $value : self::ROLE_CLIENT,
+            set: fn ($value) => in_array($value, self::ALLOWED_ROLES) ? $value : self::ROLE_CLIENT,
         );
     }
 }
