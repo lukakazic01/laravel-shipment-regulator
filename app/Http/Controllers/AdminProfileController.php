@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mappers\SelectOptionsMapper;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class AdminProfileController extends Controller
@@ -18,6 +19,10 @@ class AdminProfileController extends Controller
     public function edit(User $user) {
         $roles = SelectOptionsMapper::toSelectOptions(User::ALLOWED_ROLES);
         return view('admin.profile.edit', compact('user', 'roles'));
+    }
+
+    public function updateRole(Request $request, User $user) {
+        dd($request->all());
     }
 
 }

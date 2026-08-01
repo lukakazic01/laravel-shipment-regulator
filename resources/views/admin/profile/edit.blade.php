@@ -23,10 +23,10 @@
 
             <div>
                 <p class="text-[11px] uppercase tracking-wide text-slate-400">Current role</p>
-                <p class="text-sm text-slate-800">{{ $user->role }}</p>
+                <p class="text-sm text-slate-800 first-letter:uppercase font-bold">{{ $user->role }}</p>
             </div>
         </div>
-        <form method="POST" class="px-6 pb-6 pt-2 border-t border-slate-100">
+        <form action="{{ route('admin.profile.updateRole', $user->id) }}" method="POST" class="px-6 pb-6 pt-2 border-t border-slate-100">
             @csrf
             @method('PATCH')
             <x-forms.field name="role" required>
@@ -34,6 +34,7 @@
                 <x-forms.select :values="$roles" />
                 <x-forms.error-message />
             </x-forms.field>
+            <x-base-button type="submit" class="w-full mt-4 py-1.5! bg-secondary!">Save role</x-base-button>
         </form>
     </div>
     </div>

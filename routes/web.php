@@ -16,6 +16,7 @@ Route::controller(AdminProfileController::class)->name('admin.')->prefix('/admin
     Route::prefix('/profile')->name('profile.')->group(function () {
         Route::get('/', 'index')->name('index');
         Route::get('{user}/edit', 'edit')->name('edit');
+        Route::patch('{user}/updateRole', 'updateRole')->name('updateRole');
     });
 });
 
