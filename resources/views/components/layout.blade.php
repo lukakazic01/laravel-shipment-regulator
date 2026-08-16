@@ -6,6 +6,7 @@
 
     <title>{{ $title ?? config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 <body class="min-h-screen flex flex-col bg-[#F3F4F7] text-secondary">
     <x-the-header />
@@ -17,5 +18,6 @@
         </div>
     </main>
     <x-the-footer />
+    @livewireScripts
 </body>
 </html>

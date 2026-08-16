@@ -13,6 +13,7 @@ use App\Services\ShipmentDocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Gate;
 
 class ShipmentsController extends Controller
 {
