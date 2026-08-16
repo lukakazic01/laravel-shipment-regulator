@@ -12,7 +12,7 @@ new class extends Component
     }
 
     public function decrement() {
-        if ($this->count > 0) {
+        if ($this->count - $this->addend >= 0) {
             $this->count-=$this->addend;
         }
     }
@@ -30,5 +30,5 @@ new class extends Component
         Decrement {{$count}}
     </button>
 
-    <input class="border border-gray-200 rounded p-2" type="number" min="1" wire:model.live="addend" />
+    <input class="border border-gray-200 rounded p-2" type="number" min="1" wire:model.debounce="addend" />
 </div>
