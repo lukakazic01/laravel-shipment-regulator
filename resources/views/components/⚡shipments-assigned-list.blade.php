@@ -7,14 +7,20 @@ new class extends Component
     public int $count = 0;
     public int $addend = 1;
 
-    public function increment() {
+    public bool $isLessThanZero;
+
+    public function increment(): void  {
         $this->count+=$this->addend;
+        $this->isLessThanZero = false;
     }
 
-    public function decrement() {
-        if ($this->count - $this->addend >= 0) {
-            $this->count-=$this->addend;
+    public function decrement(): void {
+        $result = $this->count - $this->addend;
+        if ($result < 0) {
+            $this->isLessThanZero = true;
+            return;
         }
+        $this->count=$result;
     }
 
 };
@@ -30,5 +36,9 @@ new class extends Component
         Decrement {{$count}}
     </button>
 
-    <input class="border border-gray-200 rounded p-2" type="number" min="1" wire:model.debounce="addend" />
+    <input class="border border-gray-200 rounded p-2" type="number" min="1" wire:model.live="addend" />
+
+    @if ($isLessThanZero)
+        <p class="text-xs text-red-500">The result after decrement cannot be less than 0</p>
+    @endif
 </div>
