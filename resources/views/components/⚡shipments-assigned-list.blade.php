@@ -9,6 +9,10 @@ new class extends Component
 
     public bool $isLessThanZero;
 
+    public function updatedIsLessThanZero() {
+        dd('hi');
+    }
+
     public function increment(): void  {
         $this->count+=$this->addend;
         $this->isLessThanZero = false;
@@ -38,7 +42,5 @@ new class extends Component
 
     <input class="border border-gray-200 rounded p-2" type="number" min="1" wire:model.live="addend" />
 
-    @if ($isLessThanZero)
-        <p class="text-xs text-red-500">The result after decrement cannot be less than 0</p>
-    @endif
+    <p wire:show="isLessThanZero" class="text-xs text-red-500">The result after decrement cannot be less than 0</p>
 </div>
