@@ -29,9 +29,9 @@ class ShipmentRepository
      * @param CreateShipmentRequest $request
      * @return Shipment
      */
-    public function createShipment(CreateShipmentRequest $request): Shipment
+    public function createShipment(mixed $validatedData): Shipment
     {
-        return Shipment::query()->create($request->validated());
+        return Shipment::query()->create($validatedData);
     }
 
 }

@@ -25,14 +25,14 @@ class CreateShipmentRequest extends FormRequest
     {
         return [
             'title' => 'string|required|max:128|min:1',
-            'from_city' => 'string|required|max:64|min:1',
-            'from_country' => 'string|required|max:64|min:1',
-            'to_city' => 'string|required|max:64|min:1',
-            'to_country' => 'string|required|max:64|min:1',
+            'fromCity' => 'string|required|max:64|min:1',
+            'fromCountry' => 'string|required|max:64|min:1',
+            'toCity' => 'string|required|max:64|min:1',
+            'toCountry' => 'string|required|max:64|min:1',
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
             'status' => Rule::in(Shipment::SHIPMENT_STATUSES),
-            'client_id' => [
+            'clientId' => [
                 'required',
                 'integer',
                 new UserClient,
