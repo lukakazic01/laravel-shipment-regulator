@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateShipmentRequest;
 use App\Http\Requests\UpdateShipmentRequest;
 use App\Mappers\SelectOptionsMapper;
 use App\Models\Shipment;
 use App\Models\User;
 use App\Repositories\ShipmentRepository;
 use App\Rules\UserTrucker;
-use App\Services\ShipmentDocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Gate;
 
 class ShipmentsController extends Controller
 {
@@ -33,18 +30,6 @@ class ShipmentsController extends Controller
         $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
         $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
         return view('shipments.create', compact('users', 'shipmentStatuses'));
-    }
-
-    #[Authorize('create', Shipment::class)]
-    public function store(
-        CreateShipmentRequest $request,
-        ShipmentRepository $shipmentRepository,
-        ShipmentDocumentService $shipmentDocumentService
-    )
-    {
-        $shipment = $shipmentRepository->createShipment($request);
-        $shipmentDocumentService->storeShipmentDocuments($shipment, $request->file('documents'));
-        return redirect()->route('shipments.index');
     }
 
     #[Authorize('view', 'shipment')]

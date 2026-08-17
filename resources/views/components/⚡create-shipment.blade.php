@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repositories\ShipmentRepository;
 use App\Services\ShipmentDocumentService;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Authorize;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -34,11 +35,12 @@ new class extends Component {
         $this->validateOnly('clientId');
     }
 
+    #[Authorize('create', Shipment::class)]
     public function submit(ShipmentRepository $shipmentRepository, ShipmentDocumentService $shipmentDocumentService): void
     {
         $request = new CreateShipmentRequest();
         $data = $this->validate($request->rules());
-        $snakeCasedValidatedData = collect($data)->mapWithKeys(fn ($value, $key) => [Str::snake($key) => $value])->toArray();
+        $snakeCasedValidatedData = collect($data)->mapWithKeys(fn($value, $key) => [Str::snake($key) => $value])->toArray();
         $shipment = $shipmentRepository->createShipment($snakeCasedValidatedData);
         $shipmentDocumentService->storeShipmentDocuments($shipment, $this->documents);
     }
