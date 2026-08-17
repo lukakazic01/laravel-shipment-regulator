@@ -2,9 +2,9 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Str;
 
 class ShipmentRepository
 {
@@ -26,12 +26,13 @@ class ShipmentRepository
     }
 
     /**
-     * @param CreateShipmentRequest $request
+     * @param mixed $validatedData
      * @return Shipment
      */
     public function createShipment(mixed $validatedData): Shipment
     {
-        return Shipment::query()->create($validatedData);
+        $snakeCasedValidatedData = collect($validatedData)->mapWithKeys(fn ($value, $key) => [Str::snake($key) => $value])->toArray();
+        return Shipment::query()->create($snakeCasedValidatedData);
     }
 
 }
