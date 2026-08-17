@@ -51,33 +51,32 @@ new class extends Component {
     @csrf
     <x-forms.field name="title">
         <x-forms.label>Title</x-forms.label>
-        <x-forms.input wire:model.debounce="title" :value="old('title', '')"/>
+        <x-forms.input wire:model.debounce="title" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="fromCity">
         <x-forms.label>From city</x-forms.label>
-        <x-forms.input wire:model.debounce="fromCity" :value="old('fromCity', '')"/>
+        <x-forms.input wire:model.debounce="fromCity" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="fromCountry">
         <x-forms.label>From country</x-forms.label>
-        <x-forms.input wire:model.debounce="fromCountry" :value="old('fromCountry', '')"/>
+        <x-forms.input wire:model.debounce="fromCountry" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="toCity">
         <x-forms.label>To city</x-forms.label>
-        <x-forms.input wire:model.debounce="toCity" :value="old('toCity', '')"/>
+        <x-forms.input wire:model.debounce="toCity" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="toCountry">
         <x-forms.label>To country</x-forms.label>
-        <x-forms.input wire:model.debounce="toCountry" :value="old('toCountry', '')"/>
+        <x-forms.input wire:model.debounce="toCountry" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="status">
         <x-forms.label>Status</x-forms.label>
-        <x-forms.select wire:model.debounce="status" :values="$shipmentStatuses"
-                        :selected="Shipment::STATUS_UNASSIGNED"/>
+        <x-forms.select wire:model.debounce="status" :values="$shipmentStatuses" :selected="Shipment::STATUS_UNASSIGNED" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="clientId">
@@ -87,12 +86,12 @@ new class extends Component {
     </x-forms.field>
     <x-forms.field name="price">
         <x-forms.label>Price</x-forms.label>
-        <x-forms.input wire:model.debounce="price" type="number" :value="old('price', '')"/>
+        <x-forms.input wire:model.debounce="price" type="number" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="details">
         <x-forms.label>Details</x-forms.label>
-        <x-forms.textarea wire:model.debounce="details" :value="old('details', '')"/>
+        <x-forms.textarea wire:model.debounce="details" />
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="documents[]">
