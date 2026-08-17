@@ -1,12 +1,14 @@
 <?php
 
 use App\Models\Shipment;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 new class extends Component {
     use WithFileUploads;
+
     public Collection $shipmentStatuses;
     public Collection $users;
     public string $title;
@@ -19,6 +21,14 @@ new class extends Component {
     public int $price;
     public string $details;
     public array $documents = [];
+
+    public string $clientError;
+
+    public function validateUser()
+    {
+        $user = User::query()->find($this->client);
+        $this->clientError = !$user ? "User doesnt exist" : "";
+    }
 };
 ?>
 
@@ -57,7 +67,8 @@ new class extends Component {
     </x-forms.field>
     <x-forms.field required name="client_id">
         <x-forms.label>Client</x-forms.label>
-        <x-forms.select wire:model.live.debounce="client" :values="$users"/>
+        <x-forms.select wire:blur="validateUser" wire:model.live.debounce="client" :values="$users"/>
+        <p wire:show="clientError" class="text-red-500 text-sm">{{ $clientError }}</p>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field required name="price">

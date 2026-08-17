@@ -30,7 +30,7 @@ class ShipmentsController extends Controller
     #[Authorize('view-create-shipment-page', Shipment::class)]
     public function create()
     {
-        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
+        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->add(new User(['id' => 10, 'name' => 'Majmun']))->toArray(), 'name', 'id');
         $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
         return view('shipments.create', compact('users', 'shipmentStatuses'));
     }
