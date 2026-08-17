@@ -38,7 +38,8 @@ new class extends Component {
     {
         $request = new CreateShipmentRequest();
         $data = $this->validate($request->rules());
-        $shipment = $shipmentRepository->createShipment($data);
+        $snakeCasedValidatedData = collect($data)->mapWithKeys(fn ($value, $key) => [Str::snake($key) => $value])->toArray();
+        $shipment = $shipmentRepository->createShipment($snakeCasedValidatedData);
         $shipmentDocumentService->storeShipmentDocuments($shipment, $this->documents);
     }
 };

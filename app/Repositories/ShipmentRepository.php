@@ -31,8 +31,7 @@ class ShipmentRepository
      */
     public function createShipment(mixed $validatedData): Shipment
     {
-        $snakeCasedValidatedData = collect($validatedData)->mapWithKeys(fn ($value, $key) => [Str::snake($key) => $value])->toArray();
-        return Shipment::query()->create($snakeCasedValidatedData);
+        return Shipment::query()->create($validatedData);
     }
 
 }
