@@ -7,24 +7,24 @@ new class extends Component
     public int $count = 0;
     public int $addend = 1;
 
-    public bool $isLessThanZero;
-
-    public function updatedIsLessThanZero() {
-        dd('hi');
-    }
+    public string $errorMessage = "";
 
     public function increment(): void  {
         $this->count+=$this->addend;
-        $this->isLessThanZero = false;
+        $this->errorMessage = "";
     }
 
     public function decrement(): void {
         $result = $this->count - $this->addend;
         if ($result < 0) {
-            $this->isLessThanZero = true;
+            $this->errorMessage = "Amount cannot be less than 0";
             return;
         }
         $this->count=$result;
+    }
+
+    public function validateAddend() {
+        $this->errorMessage = $this->addend <= 0 ? "Addend cannot be less than 1" : "";
     }
 
 };
@@ -40,7 +40,12 @@ new class extends Component
         Decrement {{$count}}
     </button>
 
-    <input class="border border-gray-200 rounded p-2" type="number" min="1" wire:model.live="addend" />
+    <input
+        wire:change="validateAddend"
+        wire:model.debounce.300ms="addend"
+        class="border border-gray-200 rounded p-2 {{ $errorMessage ? 'border-red-500' : '' }}"
+        type="number" min="1"
+    />
 
-    <p wire:show="isLessThanZero" class="text-xs text-red-500">The result after decrement cannot be less than 0</p>
+    <p wire:show="errorMessage" class="text-xs text-red-500">{{ $errorMessage }}</p>
 </div>
