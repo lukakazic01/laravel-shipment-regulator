@@ -1,5 +1,10 @@
 <x-layout>
     <x-slot:title>All shipments</x-slot:title>
+    @if(session()->has('message'))
+        <div class=" bg-green-100 flex justify-center mb-6 border text-green-500 border-green-500 p-2 rounded w-full">
+            {{ session()->get('message') }}
+        </div>
+    @endif
     <div class="flex flex-col gap-6">
         @forelse($shipments as $shipment)
             <x-shipment-card :shipment="$shipment" :users="$users" />

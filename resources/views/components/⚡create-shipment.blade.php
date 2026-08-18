@@ -43,6 +43,7 @@ new class extends Component {
         $snakeCasedValidatedData = collect($data)->mapWithKeys(fn($value, $key) => [Str::snake($key) => $value])->toArray();
         $shipment = $shipmentRepository->createShipment($snakeCasedValidatedData);
         $shipmentDocumentService->storeShipmentDocuments($shipment, $this->documents);
+        redirect()->route('shipments.index')->with(['message' => 'You successfully created new unassigned shipment']);
     }
 };
 ?>
