@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>All shipments</x-slot:title>
     @if(session()->has('message'))
-        <div class=" bg-green-100 flex justify-center mb-6 border text-green-500 border-green-500 p-2 rounded w-full">
+        <div class=" bg-green-100 flex text-sm justify-center mb-6 border text-green-500 border-green-500 p-2 rounded w-full">
             {{ session()->get('message') }}
         </div>
     @endif
