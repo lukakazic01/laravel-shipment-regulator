@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Requests\NewAvatarRequest;
 use App\Traits\HandleImagesTrait;
+use Illuminate\Http\UploadedFile;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
@@ -10,22 +12,19 @@ new class extends Component {
     use HandleImagesTrait;
     use WithFileUploads;
 
-    #[Validate('required|image|mimes:jpeg,png,jpg,webp,avif|max:4096')]
+    #[Validate('required|image|mimes:jpeg,png,jpg,webp,avif')]
     public TemporaryUploadedFile|null $profileImage = null;
 
     public function submit()
     {
-        dd('hellow');
-//        $this->deleteImageFromStorage(auth()->user()->avatar ?? '', "images/avatars/");
-//        $name = $this->uploadImage($request->file('profile_image'), "images/avatars/");
-//        auth()->user()->update(['avatar' => $name]);
+        $request = new NewAvatarRequest();
+        $this->validate($request->rules());
+        $this->deleteImageFromStorage(auth()->user()->avatar ?? '', "images/avatars/");
+        $name = $this->uploadImage($this->profileImage->getRealPath(), "images/avatars/");
+        auth()->user()->update(['avatar' => $name]);
     }
 
-    public function updatedProfileImage()
-    {
-        $this->validate();
-    }
-};
+}
 ?>
 
 <div>
@@ -37,10 +36,10 @@ new class extends Component {
         <img class="size-20 rounded-full object-cover border border-gray-200"
              src="{{ "/storage/images/avatars/" . auth()->user()->avatar }}" alt="profile image"/>
     </div>
-    <form wire:submit="submit" method="POST" class="space-y-6" enctype="multipart/form-data">
+    <form wire:submit="submit" class="space-y-6" enctype="multipart/form-data">
         <x-forms.field name="profileImage">
             <x-forms.label>Profile Photo</x-forms.label>
-            <x-forms.file-upload wire:model.live="profileImage" accept="image/*"/>
+            <x-forms.file-upload wire:model.live="profileImage"/>
             <x-forms.error-message/>
         </x-forms.field>
         <div class="flex items-center justify-end gap-3 pt-2">
