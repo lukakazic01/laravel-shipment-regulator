@@ -16,12 +16,12 @@ class AdminProfileController extends Controller
         $users = User::query()->hydrate(
             Cache::remember('users', 600, fn () => User::all()->toArray())
         )->reject(fn ($user) => $user->id === auth()->id());
-        return view('admin.profile.index', compact('users'));
+        return view('pages.admin.profile.index', compact('users'));
     }
 
     public function edit(User $user) {
         $roles = SelectOptionsMapper::toSelectOptions(User::ALLOWED_ROLES);
-        return view('admin.profile.edit', compact('user', 'roles'));
+        return view('pages.admin.profile.edit', compact('user', 'roles'));
     }
 
     public function updateRole(Request $request, User $user) {
