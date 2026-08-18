@@ -8,7 +8,7 @@ class ProfileController extends Controller
 {
 
     public function index() {
-        return view('profile.index');
+        return view('pages.profile.index');
     }
 
     public function changeAvatar(NewAvatarRequest $request) {

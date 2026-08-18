@@ -1,31 +1,7 @@
 <x-layout>
     <x-slot:title>Profile Information</x-slot:title>
     <div class="max-w-xl mx-auto">
-        <div>
-            <div class="mb-6">
-                <h1 class="text-2xl font-bold text-gray-900">Profile Photo</h1>
-                <p class="text-sm text-gray-500 mt-1">Update your profile picture.</p>
-            </div>
-            @if(auth()->user()->avatar)
-                <div class="mb-6">
-                    <img class="size-20 rounded-full object-cover border border-gray-200" src="{{ "/storage/images/avatars/" . auth()->user()->avatar }}"  alt="profile image"/>
-                </div>
-            @endif
-            <form action="{{ route('profile.change-avatar') }}" method="POST" class="space-y-6" enctype="multipart/form-data">
-                @csrf
-                @method('PUT')
-
-                <x-forms.field name="profile_image">
-                    <x-forms.label>Profile Photo</x-forms.label>
-                    <x-forms.file-upload accept="image/*" />
-                    <x-forms.error-message />
-                </x-forms.field>
-
-                <div class="flex items-center justify-end gap-3 pt-2">
-                    <x-base-button type="submit">Save</x-base-button>
-                </div>
-            </form>
-        </div>
+        <livewire:profile.update-profile-photo />
         <div>
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-gray-900">Profile Information</h1>

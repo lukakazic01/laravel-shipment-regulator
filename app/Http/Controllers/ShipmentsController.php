@@ -21,7 +21,7 @@ class ShipmentsController extends Controller
             Cache::remember('unassigned_shipments', 600, fn () => $shipmentRepository->getShipmentsByStatus(Shipment::STATUS_UNASSIGNED)->toArray())
         );
         $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
-        return view('shipments.index', compact('shipments', 'users'));
+        return view('pages.shipments.index', compact('shipments', 'users'));
     }
 
     #[Authorize('view-create-shipment-page', Shipment::class)]
@@ -29,14 +29,14 @@ class ShipmentsController extends Controller
     {
         $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
         $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
-        return view('shipments.create', compact('users', 'shipmentStatuses'));
+        return view('pages.shipments.create', compact('users', 'shipmentStatuses'));
     }
 
     #[Authorize('view', 'shipment')]
     public function show(Shipment $shipment)
     {
         $shipment->load('shipmentDocuments');
-        return view('shipments.show', compact('shipment'));
+        return view('pages.shipments.show', compact('shipment'));
     }
 
     #[Authorize('view-edit-shipment-page', Shipment::class)]
@@ -44,7 +44,7 @@ class ShipmentsController extends Controller
     {
         $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
         $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
-        return view('shipments.edit', compact('shipment', 'shipmentStatuses', 'users'));
+        return view('pages.shipments.edit', compact('shipment', 'shipmentStatuses', 'users'));
     }
 
     public function update(UpdateShipmentRequest $request, Shipment $shipment)
