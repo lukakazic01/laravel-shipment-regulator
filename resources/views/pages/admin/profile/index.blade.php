@@ -1,5 +1,10 @@
 <x-layout>
     <div class="bg-white rounded border border-gray-200 overflow-hidden">
+        @if(session()->has('message'))
+            <div class=" bg-green-100 flex text-sm justify-center mb-6 border text-green-500 border-green-500 p-2 rounded w-full">
+                {{ session()->get('message') }}
+            </div>
+        @endif
         <table class="w-full text-sm">
             <thead>
             <tr class="border-b border-gray-200 bg-gray-50">

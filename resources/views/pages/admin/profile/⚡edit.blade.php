@@ -3,15 +3,34 @@
 use App\Mappers\SelectOptionsMapper;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Illuminate\Validation\Rule;
+use Livewire\Attributes\Authorize;
 use Livewire\Component;
 
 new class extends Component {
     public User $user;
     public Collection $roles;
+    public string $role = "";
 
     public function mount()
     {
         $this->roles = SelectOptionsMapper::toSelectOptions(User::ALLOWED_ROLES);
+        $this->role = $this->user->role;
+    }
+
+    public function rules()
+    {
+        return [
+            'role' => ['required', 'string', Rule::in(User::ALLOWED_ROLES)]
+        ];
+    }
+
+    #[Authorize('admin-access')]
+    public function assignNewRoleToUser(User $user)
+    {
+        $validated = $this->validate();
+        $user->forceFill($validated)->save();
+        return redirect()->route('admin.profile.index')->with('message', "Successfully changed role of $user->name to $this->role");
     }
 };
 ?>
@@ -44,13 +63,11 @@ new class extends Component {
                 <p class="text-sm text-slate-800 first-letter:uppercase font-bold">{{ $user->role }}</p>
             </div>
         </div>
-        <form action="{{ route('admin.profile.updateRole', $user->id) }}" method="POST"
-              class="px-6 pb-6 pt-2 border-t border-slate-100">
+        <form wire:submit="assignNewRoleToUser({{ $user->id }})" class="px-6 pb-6 pt-2 border-t border-slate-100">
             @csrf
-            @method('PATCH')
             <x-forms.field name="role" required>
                 <x-forms.label>Roles</x-forms.label>
-                <x-forms.select :values="$roles" :selected="$user->role"/>
+                <x-forms.select wire:model.blur="role" :values="$roles"/>
                 <x-forms.error-message/>
             </x-forms.field>
             <x-base-button type="submit" class="w-full mt-4 py-1.5! bg-secondary!">Save role</x-base-button>
