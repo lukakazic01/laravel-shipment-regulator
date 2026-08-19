@@ -7,10 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'pages.home')->name('home');
 
-Route::controller(ProfileController::class)->name('profile.')->prefix('/profile')->middleware('auth')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::put('/', 'changeAvatar')->name('change-avatar');
-});
+Route::livewire('/profile', 'pages::profile')->middleware('auth')->name('profile.index');
 
 Route::controller(AdminProfileController::class)->name('admin.')->prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::prefix('/profile')->name('profile.')->group(function () {
