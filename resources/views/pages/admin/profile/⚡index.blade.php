@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AlertSeverity;
 use App\Models\User;
 use Illuminate\Support\Collection;
 use Livewire\Component;
@@ -10,7 +11,7 @@ new class extends Component {
      */
     public Collection $users;
 
-    public function mount()
+    public function mount(): void
     {
         $this->users = User::query()->hydrate(
             Cache::remember('users', 600, fn() => User::all()->toArray())
@@ -20,12 +21,7 @@ new class extends Component {
 ?>
 
 <div class="bg-white rounded border border-gray-200 overflow-hidden">
-    @if(session()->has('message'))
-        <div
-            class=" bg-green-100 flex text-sm justify-center mb-6 border text-green-500 border-green-500 p-2 rounded w-full">
-            {{ session()->get('message') }}
-        </div>
-    @endif
+    <x-base.session-message :alert-severity="AlertSeverity::Success" />
     <table class="w-full text-sm">
         <thead>
         <tr class="border-b border-gray-200 bg-gray-50">
