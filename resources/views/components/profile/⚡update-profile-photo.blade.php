@@ -49,9 +49,8 @@ new class extends Component {
             <x-forms.error-message/>
         </x-forms.field>
         <div class="flex items-center justify-end gap-3 pt-2">
-            <x-base-button class="relative flex! items-center! justify-center!" type="submit">
-                <span wire:loading.class="opacity-0">Save</span>
-                <span wire:loading class="absolute z-200 size-5 rounded-full border-2 border-white-300 border-t-transparent animate-spin" />
+            <x-base-button loader-target="submit" type="submit">
+                Save
             </x-base-button>
         </div>
     </form>
