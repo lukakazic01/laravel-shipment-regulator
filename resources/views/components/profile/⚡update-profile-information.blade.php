@@ -25,6 +25,12 @@ new class extends Component {
         $this->dispatch('success', message: 'Successfully updated user profile information');
     }
 
+    public function resetToOldValues() {
+        $this->email = auth()->user()->email;
+        $this->name = auth()->user()->name;
+        $this->resetErrorBag();
+    }
+
 };
 ?>
 
@@ -51,7 +57,8 @@ new class extends Component {
                 {{ $errors->updateProfileInformation->first('email') }}
             </x-forms.error-message>
         </x-forms.field>
-        <div class="flex items-center justify-end gap-3 pt-2">
+        <div class="flex items-center justify-between gap-3 pt-2">
+            <x-base-button wire:click="resetToOldValues" class="bg-secondary!">Reset</x-base-button>
             <x-base-button loader-target="updateProfileInformation" type="submit">Save</x-base-button>
         </div>
     </form>

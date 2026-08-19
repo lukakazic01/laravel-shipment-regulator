@@ -9,14 +9,19 @@
     ]) }}
 >
     <span
-        wire:loading.class="opacity-0"
-        @if ($loaderTarget) wire:target="{{ $loaderTarget }}" @endif
+        @if ($loaderTarget)
+            wire:loading.class="opacity-0"
+            wire:target="{{ $loaderTarget }}"
+        @endif
     >
         {{ $slot }}
     </span>
-    <span
-        wire:loading
-        @if ($loaderTarget) wire:target="{{ $loaderTarget }}" @endif
-        class="absolute z-200 size-5 rounded-full border-2 border-white-300 border-t-transparent animate-spin"
-    />
+
+    @if ($loaderTarget)
+        <span
+            wire:loading
+            wire:target="{{ $loaderTarget }}"
+            class="absolute z-200 size-5 rounded-full border-2 border-white-300 border-t-transparent animate-spin"
+        />
+    @endif
 </button>
