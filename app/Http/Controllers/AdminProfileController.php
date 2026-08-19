@@ -19,11 +19,6 @@ class AdminProfileController extends Controller
         return view('pages.admin.profile.index', compact('users'));
     }
 
-    public function edit(User $user) {
-        $roles = SelectOptionsMapper::toSelectOptions(User::ALLOWED_ROLES);
-        return view('pages.admin.profile.edit', compact('user', 'roles'));
-    }
-
     public function updateRole(Request $request, User $user) {
         $validated = $request->validate([
             'role' => [

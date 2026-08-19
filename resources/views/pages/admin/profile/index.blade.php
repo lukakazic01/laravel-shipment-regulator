@@ -28,11 +28,13 @@
                             {{ $user->role }}
                         </span>
                     </td>
-                    <td class="px-6 py-4">
-                        <a href="{{ route('admin.profile.edit', $user->id) }}" class="text-primary font-semibold">
-                            Edit
-                        </a>
-                    </td>
+                    @can('admin-access')
+                        <td class="px-6 py-4">
+                            <a href="{{ route('admin.profile.edit', $user->id) }}" class="text-primary font-semibold">
+                                Edit
+                            </a>
+                        </td>
+                    @endcan
                 </tr>
             @endforeach
             </tbody>
