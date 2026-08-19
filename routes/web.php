@@ -3,7 +3,7 @@
 use App\Http\Controllers\ShipmentsController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'pages.home')->name('home');
+Route::livewire('/', 'pages::home')->name('home');
 
 Route::livewire('/profile', 'pages::profile')->middleware('auth')->name('profile.index');
 
