@@ -22,18 +22,13 @@ new class extends Component {
         $this->deleteImageFromStorage(auth()->user()->avatar ?? '', "images/avatars/");
         $name = $this->uploadImage($this->profileImage->getRealPath(), "images/avatars/");
         auth()->user()->update(['avatar' => $name]);
-        session()->flash('message', 'Profile photo was changed successfully');
+        $this->dispatch('success', message: 'Profile photo was changed successfully');
     }
 
 }
 ?>
 
 <div>
-    @if(session()->has('message'))
-        <div class=" bg-green-100 flex text-sm justify-center mb-6 border text-green-500 border-green-500 p-2 rounded w-full">
-            {{ session()->get('message') }}
-        </div>
-    @endif
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-900">Profile Photo</h1>
         <p class="text-sm text-gray-500 mt-1">Update your profile picture.</p>
