@@ -1,10 +1,15 @@
 <?php
 
 use App\Actions\Fortify\UpdateUserProfileInformation;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 new class extends Component {
+
+    #[Validate('required|string|min:2')]
     public string $name = "";
+
+    #[Validate('required|string|email')]
     public string $email = "";
 
     public function mount()
@@ -25,7 +30,8 @@ new class extends Component {
         $this->dispatch('success', message: 'Successfully updated user profile information');
     }
 
-    public function resetToOldValues() {
+    public function resetToOldValues()
+    {
         $this->email = auth()->user()->email;
         $this->name = auth()->user()->name;
         $this->resetErrorBag();
@@ -45,14 +51,14 @@ new class extends Component {
         @method('PUT')
         <x-forms.field :has-error="$errors->updateProfileInformation->has('name')" name="name" required>
             <x-forms.label>Name</x-forms.label>
-            <x-forms.input wire:model.debounce.300ms="name"/>
+            <x-forms.input wire:model.live.debounce.300ms="name"/>
             <x-forms.error-message>
                 {{ $errors->updateProfileInformation->first('name') }}
             </x-forms.error-message>
         </x-forms.field>
         <x-forms.field :has-error="$errors->updateProfileInformation->has('email')" name="email" required>
             <x-forms.label>Email</x-forms.label>
-            <x-forms.input wire:model.debounce.300ms="email"/>
+            <x-forms.input wire:model.live.debounce.300ms="email"/>
             <x-forms.error-message>
                 {{ $errors->updateProfileInformation->first('email') }}
             </x-forms.error-message>
