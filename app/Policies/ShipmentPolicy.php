@@ -73,6 +73,6 @@ class ShipmentPolicy
     }
 
     public function updateTrucker(User $user, Shipment $shipment): bool {
-        return $shipment->client_id === $user->id;
+        return $shipment->client_id === $user->id || $user->role === User::ROLE_ADMINISTRATOR;
     }
 }

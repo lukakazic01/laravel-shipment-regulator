@@ -35,7 +35,7 @@ new class extends Component {
     <x-base.session-message :alert-severity="AlertSeverity::Success"/>
     <div class="flex flex-col gap-6">
         @forelse($shipments as $shipment)
-            <x-shipment-card :shipment="$shipment" :users="$users"/>
+            <livewire:shipments.shipment-card :shipment="$shipment" :users="$users"/>
         @empty
             <p class="text-center text-secondary text-sm">
                 We currently don't have any unassigned shipment

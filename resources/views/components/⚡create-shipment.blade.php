@@ -48,8 +48,7 @@ new class extends Component {
 };
 ?>
 
-<form wire:submit="submit" enctype="multipart/form-data" class="flex flex-col gap-4">
-    @csrf
+<form wire:submit="submit" class="flex flex-col gap-4">
     <x-forms.field name="title">
         <x-forms.label>Title</x-forms.label>
         <x-forms.input wire:model.debounce="title" />

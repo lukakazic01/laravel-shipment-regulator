@@ -1,6 +1,20 @@
-@php
-    use App\View\Components\ShipmentCard;
-@endphp
+<?php
+
+use App\Models\Shipment;
+use Illuminate\Support\Collection;
+use Livewire\Component;
+
+new class extends Component {
+
+    /**
+     * @param Shipment $shipment
+     * @param Collection<int, array{label: string|int, value:string|int}> $users
+     */
+
+    public Shipment $shipment;
+    public Collection $users;
+};
+?>
 
 <div
     {{ $attributes->class(["bg-white rounded border border-gray-200 p-6"]) }}
@@ -34,7 +48,7 @@
                 @method('PATCH')
                 <x-forms.field required name="user_id_shipment_{{ $shipment->id }}">
                     <x-forms.label>Trucker</x-forms.label>
-                    <x-forms.select :values="$users" />
+                    <x-forms.select :values="$users"/>
                     <x-forms.error-message/>
                 </x-forms.field>
                 <div class="mt-3">
@@ -48,10 +62,12 @@
     @canany(['view-edit-shipment-page', 'view'], $shipment)
         <div class="mt-5 flex items-center gap-6 justify-end">
             @can('view-edit-shipment-page', $shipment)
-                <a href="{{ route('shipments.edit', $shipment->id) }}" class="text-sm font-semibold text-primary">Edit</a>
+                <a href="{{ route('shipments.edit', $shipment->id) }}"
+                   class="text-sm font-semibold text-primary">Edit</a>
             @endcan
             @can('view', $shipment)
-                <a href="{{ route('shipments.show', $shipment->id) }}" class="text-sm font-semibold text-primary">Show</a>
+                <a href="{{ route('shipments.show', $shipment->id) }}"
+                   class="text-sm font-semibold text-primary">Show</a>
             @endcan
         </div>
     @endcanany
