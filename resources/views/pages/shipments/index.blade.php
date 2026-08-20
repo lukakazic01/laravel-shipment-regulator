@@ -1,9 +1,10 @@
+@php use App\Enums\AlertSeverity; @endphp
 <x-layout>
     <x-slot:title>All shipments</x-slot:title>
-    <x-base.session-message :alert-severity="AlertSeverity::Success" />
+    <x-base.session-message :alert-severity="AlertSeverity::Success"/>
     <div class="flex flex-col gap-6">
         @forelse($shipments as $shipment)
-            <x-shipment-card :shipment="$shipment" :users="$users" />
+            <x-shipment-card :shipment="$shipment" :users="$users"/>
         @empty
             <p class="text-center text-secondary text-sm">
                 We currently don't have any unassigned shipment
