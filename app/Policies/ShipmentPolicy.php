@@ -35,9 +35,9 @@ class ShipmentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Shipment $shipment): bool
+    public function update(User $user): bool
     {
-        return false;
+        return $user->role === User::ROLE_ADMINISTRATOR;
     }
 
     /**

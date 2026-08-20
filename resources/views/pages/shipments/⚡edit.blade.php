@@ -4,11 +4,11 @@ use App\Mappers\SelectOptionsMapper;
 use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Support\Collection;
+use Livewire\Attributes\Authorize;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-new class extends Component
-{
+new class extends Component {
     use WithFileUploads;
 
     public Shipment $shipment;
@@ -41,9 +41,10 @@ new class extends Component
         $this->users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
     }
 
+    #[Authorize('update', Shipment::class)]
     public function submit()
     {
-        dd($this->status);
+        dd($this->documents);
     }
 };
 ?>
