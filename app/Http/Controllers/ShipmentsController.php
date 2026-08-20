@@ -15,15 +15,6 @@ use Illuminate\Support\Facades\Cache;
 class ShipmentsController extends Controller
 {
 
-    public function index(ShipmentRepository $shipmentRepository)
-    {
-        $shipments = Shipment::query()->hydrate(
-            Cache::remember('unassigned_shipments', 600, fn () => $shipmentRepository->getShipmentsByStatus(Shipment::STATUS_UNASSIGNED)->toArray())
-        );
-        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
-        return view('pages.shipments.index', compact('shipments', 'users'));
-    }
-
     #[Authorize('view-create-shipment-page', Shipment::class)]
     public function create()
     {
