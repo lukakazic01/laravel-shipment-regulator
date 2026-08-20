@@ -18,8 +18,8 @@ Route::patch('/shipments/{shipment}/assign-trucker', [ShipmentsController::class
 
 Route::name("shipments.")->prefix("/shipments")->group(function () {
     Route::livewire("/", "pages::shipments")->name('index');
+    Route::livewire('/{shipment}', "pages::shipments.show")->name('show')->can('view', 'shipment');
     Route::get('/create', [ShipmentsController::class, 'create'])->name('create');
-    Route::get('/{shipment}', [ShipmentsController::class, 'show'])->name('show');
     Route::get('/{shipment}/edit', [ShipmentsController::class, 'edit'])->name('edit');
     Route::patch('/{shipment}', [ShipmentsController::class, 'update'])->name('update');
     Route::patch('/{shipment}/assign-trucker', [ShipmentsController::class, 'assignTrucker'])->name('assign-trucker');

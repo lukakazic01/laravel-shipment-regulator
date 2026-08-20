@@ -23,13 +23,6 @@ class ShipmentsController extends Controller
         return view('pages.shipments.create', compact('users', 'shipmentStatuses'));
     }
 
-    #[Authorize('view', 'shipment')]
-    public function show(Shipment $shipment)
-    {
-        $shipment->load('shipmentDocuments');
-        return view('pages.shipments.show', compact('shipment'));
-    }
-
     #[Authorize('view-edit-shipment-page', Shipment::class)]
     public function edit(Shipment $shipment)
     {
