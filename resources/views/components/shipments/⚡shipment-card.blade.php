@@ -26,7 +26,6 @@ new class extends Component {
         ];
     }
 
-
     #[Authorize('update-trucker', 'shipment')]
     public function assignTrucker()
     {

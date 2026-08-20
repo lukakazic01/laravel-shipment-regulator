@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ShipmentsController;
 use App\Models\Shipment;
 use Illuminate\Support\Facades\Route;
 

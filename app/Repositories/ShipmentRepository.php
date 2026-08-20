@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Support\Str;
 
 class ShipmentRepository
 {
