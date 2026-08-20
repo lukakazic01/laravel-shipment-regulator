@@ -1,7 +1,11 @@
 <?php
 
 use App\Models\Shipment;
+use App\Rules\UserTrucker;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
+use JetBrains\PhpStorm\NoReturn;
+use Livewire\Attributes\Authorize;
 use Livewire\Component;
 
 new class extends Component {
@@ -13,6 +17,26 @@ new class extends Component {
 
     public Shipment $shipment;
     public Collection $users;
+    public string $userId;
+
+    public function rules()
+    {
+        return [
+            "userId" => ['required', 'integer', new UserTrucker]
+        ];
+    }
+
+
+    #[Authorize('update-trucker', 'shipment')]
+    public function assignTrucker()
+    {
+        $validated = $this->validate();
+        $this->shipment->user_id = $validated["userId"];
+        $this->shipment->status = Shipment::STATUS_IN_PROGRESS;
+        $this->shipment->save();
+        redirect()->route('shipments.index');
+    }
+
 };
 ?>
 
@@ -43,12 +67,10 @@ new class extends Component {
     @can('update-trucker', $shipment)
         <div class="mt-5">
             <h3 class="text-xs font-semibold text-secondary/50 uppercase tracking-wide mb-3">Assign Trucker</h3>
-            <form method="POST" action="{{ route('shipments.assign-trucker', $shipment->id) }}">
-                @csrf
-                @method('PATCH')
-                <x-forms.field required name="user_id_shipment_{{ $shipment->id }}">
+            <form wire:submit="assignTrucker">
+                <x-forms.field required name="userId">
                     <x-forms.label>Trucker</x-forms.label>
-                    <x-forms.select :values="$users"/>
+                    <x-forms.select wire:model="userId" :values="$users"/>
                     <x-forms.error-message/>
                 </x-forms.field>
                 <div class="mt-3">

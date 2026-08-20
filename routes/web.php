@@ -20,5 +20,4 @@ Route::name("shipments.")->prefix("/shipments")->group(function () {
     Route::livewire('/create', 'pages::shipments.create')->name('create')->can('view-create-shipment-page', Shipment::class);
     Route::livewire('/{shipment}', "pages::shipments.show")->name('show')->can('view', 'shipment');
     Route::livewire('/{shipment}/edit', 'pages::shipments.edit')->name('edit')->can('view-edit-shipment-page', 'shipment');
-    Route::patch('/{shipment}/assign-trucker', [ShipmentsController::class, 'assignTrucker'])->name('assign-trucker');
 });
