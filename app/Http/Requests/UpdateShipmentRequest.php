@@ -40,7 +40,7 @@ class UpdateShipmentRequest extends FormRequest
             'status' => [
                 Rule::in(Shipment::SHIPMENT_STATUSES),
                 Rule::when(
-                    $this->filled('userId'),
+                    filled('userId'),
                     Rule::notIn(Shipment::STATUS_UNASSIGNED)
                 )
             ],

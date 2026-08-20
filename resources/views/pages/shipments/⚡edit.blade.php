@@ -60,8 +60,8 @@ new class extends Component {
         $request = new UpdateShipmentRequest();
         $validatedData = $this->validate($request->rules());
         $snakeCased = collect($validatedData)->mapWithKeys(fn($value, $key) => [Str::snake($key) => $value])->toArray();
-        $shipment->update($snakeCased);
-        redirect()->route('shipments.index');
+        $this->shipment->update($snakeCased);
+        redirect()->route('shipments.index')->with('message', "Successfully edited {$this->shipment->title} shipment");
     }
 };
 ?>
