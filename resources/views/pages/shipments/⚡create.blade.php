@@ -20,4 +20,6 @@ new class extends Component {
 ?>
 
 <x-slot:title>Create shipment</x-slot:title>
-<livewire:create-shipment :shipment-statuses="$shipmentStatuses" :users="$users"/>
+<div>
+    <livewire:create-shipment :shipment-statuses="$shipmentStatuses" :users="$users"/>
+</div>
