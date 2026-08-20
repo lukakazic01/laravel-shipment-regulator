@@ -11,12 +11,6 @@ use Illuminate\Routing\Attributes\Controllers\Authorize;
 class ShipmentsController extends Controller
 {
 
-    public function update(UpdateShipmentRequest $request, Shipment $shipment)
-    {
-        $shipment->update($request->validated());
-        return redirect()->route('shipments.index');
-    }
-
     public function destroy(Shipment $shipment)
     {
         //

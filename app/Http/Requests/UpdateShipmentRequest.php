@@ -21,18 +21,18 @@ class UpdateShipmentRequest extends FormRequest
     {
         return [
             'title' => 'string|required|max:128|min:1',
-            'from_city' => 'string|required|max:64|min:1',
-            'from_country' => 'string|required|max:64|min:1',
-            'to_city' => 'string|required|max:64|min:1',
-            'to_country' => 'string|required|max:64|min:1',
+            'fromCity' => 'string|required|max:64|min:1',
+            'fromCountry' => 'string|required|max:64|min:1',
+            'toCity' => 'string|required|max:64|min:1',
+            'toCountry' => 'string|required|max:64|min:1',
             'price' => 'integer|required|min:1',
             'details' => 'string|nullable',
-            'user_id' => [
+            'userId' => [
                 'integer',
                 'required',
                 new UserTrucker
             ],
-            'client_id' => [
+            'clientId' => [
                 'integer',
                 'required',
                 new UserClient
@@ -40,7 +40,7 @@ class UpdateShipmentRequest extends FormRequest
             'status' => [
                 Rule::in(Shipment::SHIPMENT_STATUSES),
                 Rule::when(
-                    $this->filled('user_id'),
+                    $this->filled('userId'),
                     Rule::notIn(Shipment::STATUS_UNASSIGNED)
                 )
             ],
