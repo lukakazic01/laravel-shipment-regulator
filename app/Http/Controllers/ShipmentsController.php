@@ -3,25 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdateShipmentRequest;
-use App\Mappers\SelectOptionsMapper;
 use App\Models\Shipment;
-use App\Models\User;
-use App\Repositories\ShipmentRepository;
 use App\Rules\UserTrucker;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Attributes\Controllers\Authorize;
-use Illuminate\Support\Facades\Cache;
 
 class ShipmentsController extends Controller
 {
-
-    #[Authorize('view-edit-shipment-page', Shipment::class)]
-    public function edit(Shipment $shipment)
-    {
-        $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
-        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
-        return view('pages.shipments.edit', compact('shipment', 'shipmentStatuses', 'users'));
-    }
 
     public function update(UpdateShipmentRequest $request, Shipment $shipment)
     {

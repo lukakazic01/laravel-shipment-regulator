@@ -15,13 +15,11 @@ Route::name('admin.')->prefix('/admin')->middleware(['auth', 'admin'])->group(fu
     });
 });
 
-Route::patch('/shipments/{shipment}/assign-trucker', [ShipmentsController::class, 'assignTrucker'])->name('shipments.assign-trucker');
-
 Route::name("shipments.")->prefix("/shipments")->group(function () {
     Route::livewire("/", "pages::shipments")->name('index');
     Route::livewire('/create', 'pages::shipments.create')->name('create')->can('view-create-shipment-page', Shipment::class);
     Route::livewire('/{shipment}', "pages::shipments.show")->name('show')->can('view', 'shipment');
-    Route::get('/{shipment}/edit', [ShipmentsController::class, 'edit'])->name('edit');
+    Route::livewire('/{shipment}/edit', 'pages::shipments.edit')->name('edit')->can('view-edit-shipment-page', 'shipment');
     Route::patch('/{shipment}', [ShipmentsController::class, 'update'])->name('update');
     Route::patch('/{shipment}/assign-trucker', [ShipmentsController::class, 'assignTrucker'])->name('assign-trucker');
 });
