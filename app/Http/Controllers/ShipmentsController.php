@@ -15,14 +15,6 @@ use Illuminate\Support\Facades\Cache;
 class ShipmentsController extends Controller
 {
 
-    #[Authorize('view-create-shipment-page', Shipment::class)]
-    public function create()
-    {
-        $users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
-        $shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
-        return view('pages.shipments.create', compact('users', 'shipmentStatuses'));
-    }
-
     #[Authorize('view-edit-shipment-page', Shipment::class)]
     public function edit(Shipment $shipment)
     {

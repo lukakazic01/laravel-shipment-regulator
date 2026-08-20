@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ShipmentsController;
+use App\Models\Shipment;
 use Illuminate\Support\Facades\Route;
 
 Route::livewire('/', 'pages::home')->name('home');
@@ -18,8 +19,8 @@ Route::patch('/shipments/{shipment}/assign-trucker', [ShipmentsController::class
 
 Route::name("shipments.")->prefix("/shipments")->group(function () {
     Route::livewire("/", "pages::shipments")->name('index');
+    Route::livewire('/create', 'pages::shipments.create')->name('create')->can('view-create-shipment-page', Shipment::class);
     Route::livewire('/{shipment}', "pages::shipments.show")->name('show')->can('view', 'shipment');
-    Route::get('/create', [ShipmentsController::class, 'create'])->name('create');
     Route::get('/{shipment}/edit', [ShipmentsController::class, 'edit'])->name('edit');
     Route::patch('/{shipment}', [ShipmentsController::class, 'update'])->name('update');
     Route::patch('/{shipment}/assign-trucker', [ShipmentsController::class, 'assignTrucker'])->name('assign-trucker');
