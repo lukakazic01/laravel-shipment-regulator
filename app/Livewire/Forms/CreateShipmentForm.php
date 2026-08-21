@@ -1,26 +1,45 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Livewire\Forms;
 
 use App\Models\Shipment;
 use App\Rules\UserClient;
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Validate;
+use Livewire\Form;
 
-class CreateShipmentRequest extends FormRequest
+class CreateShipmentForm extends Form
 {
+    #[Validate]
+    public string $title;
 
-    public function authorize(): bool
-    {
-        return true;
-    }
+    #[Validate]
+    public string $fromCity;
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
+    #[Validate]
+    public string $fromCountry;
+
+    #[Validate]
+    public string $toCity;
+
+    #[Validate]
+    public string $toCountry;
+
+    #[Validate]
+    public string $status;
+
+    #[Validate]
+    public int $clientId;
+
+    #[Validate]
+    public int $price;
+
+    #[Validate]
+    public string $details;
+
+    #[Validate]
+    public array $documents = [];
+
     public function rules(): array
     {
         return [
@@ -35,6 +54,7 @@ class CreateShipmentRequest extends FormRequest
             'clientId' => [
                 'required',
                 'integer',
+                'exists:users,id',
                 new UserClient,
             ],
             'documents' => 'required|array',
