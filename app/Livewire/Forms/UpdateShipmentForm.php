@@ -1,22 +1,27 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Livewire\Forms;
 
 use App\Models\Shipment;
 use App\Rules\UserClient;
 use App\Rules\UserTrucker;
-use Illuminate\Contracts\Validation\ValidationRule;
-use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Livewire\Form;
 
-class UpdateShipmentRequest extends FormRequest
+class UpdateShipmentForm extends Form
 {
+    public string $title = "";
+    public string $fromCity = "";
+    public string $fromCountry = "";
+    public string $toCity = "";
+    public string $toCountry = "";
+    public string $status = "";
+    public string|null $userId = "";
+    public string|null $clientId = "";
+    public int $price;
+    public string $details = "";
+    public array $documents = [];
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [

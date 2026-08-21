@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Requests\UpdateShipmentRequest;
+use App\Livewire\Forms\UpdateShipmentForm;
 use App\Mappers\SelectOptionsMapper;
 use App\Models\Shipment;
 use App\Models\User;
@@ -24,41 +25,20 @@ new class extends Component {
      * @var Collection<int, User> $users
      */
     public Collection $users;
+    public UpdateShipmentForm $form;
 
-    public string $title = "";
-    public string $fromCity = "";
-    public string $fromCountry = "";
-    public string $toCity = "";
-    public string $toCountry = "";
-    public string $status = "";
-    public string|null $userId = "";
-    public string|null $clientId = "";
-    public int $price;
-    public string $details = "";
-    public array $documents = [];
 
     public function mount(): void
     {
         $this->shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES)->add(['label' => 'o', 'value' => 'ok']);
         $this->users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
-
-        $this->title = $this->shipment->title;
-        $this->fromCity = $this->shipment->from_city;
-        $this->fromCountry = $this->shipment->from_country;
-        $this->toCity = $this->shipment->to_city;
-        $this->toCountry = $this->shipment->to_country;
-        $this->status = $this->shipment->status;
-        $this->userId = $this->shipment->user_id;
-        $this->clientId = $this->shipment->client_id;
-        $this->price = $this->shipment->price;
-        $this->details = $this->shipment->details;
+        $this->form->fill(collect($this->shipment->getOriginal())->mapWithKeys(fn ($value, $key) => [Str::camel($key) => $value]));
     }
 
     #[Authorize('update', Shipment::class)]
     public function submit(): void
     {
-        $request = new UpdateShipmentRequest();
-        $validatedData = $this->validate($request->rules());
+        $validatedData = $this->form->validate();
         $snakeCased = collect($validatedData)->mapWithKeys(fn($value, $key) => [Str::snake($key) => $value])->toArray();
         $this->shipment->update($snakeCased);
         redirect()->route('shipments.index')->with('message', "Successfully edited {$this->shipment->title} shipment");
@@ -69,60 +49,60 @@ new class extends Component {
 <x-slot:title>Edit shipment</x-slot:title>
 <form wire:submit="submit" class="flex flex-col gap-4">
     @csrf
-    <x-forms.field name="title">
+    <x-forms.field name="form.title">
         <x-forms.label>Title</x-forms.label>
-        <x-forms.input wire:model.blur="title"/>
+        <x-forms.input wire:model.blur="form.title"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="fromCity">
+    <x-forms.field name="form.fromCity">
         <x-forms.label>From city</x-forms.label>
-        <x-forms.input wire:model.blur="fromCity"/>
+        <x-forms.input wire:model.blur="form.fromCity"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="fromCountry">
+    <x-forms.field name="form.fromCountry">
         <x-forms.label>From country</x-forms.label>
-        <x-forms.input wire:model.blur="fromCountry"/>
+        <x-forms.input wire:model.blur="form.fromCountry"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="toCity">
+    <x-forms.field name="form.toCity">
         <x-forms.label>To city</x-forms.label>
-        <x-forms.input wire:model.blur="toCity"/>
+        <x-forms.input wire:model.blur="form.toCity"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="toCountry">
+    <x-forms.field name="form.toCountry">
         <x-forms.label>To country</x-forms.label>
-        <x-forms.input wire:model.blur="toCountry"/>
+        <x-forms.input wire:model.blur="form.toCountry"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="status">
+    <x-forms.field name="form.status">
         <x-forms.label>Status</x-forms.label>
-        <x-forms.select wire:model.blur="status" :values="$shipmentStatuses" />
+        <x-forms.select wire:model.blur="form.status" :values="$shipmentStatuses"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="userId">
+    <x-forms.field name="form.userId">
         <x-forms.label>Trucker</x-forms.label>
-        <x-forms.select wire:model.blur="userId" :values="$users" />
+        <x-forms.select wire:model.blur="form.userId" :values="$users"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="clientId">
+    <x-forms.field name="form.clientId">
         <x-forms.label>Client</x-forms.label>
-        <x-forms.select wire:model.blur="clientId" :values="$users" />
+        <x-forms.select wire:model.blur="form.clientId" :values="$users"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="price">
+    <x-forms.field name="form.price">
         <x-forms.label>Price</x-forms.label>
-        <x-forms.input wire:model.blur="price" type="number" />
+        <x-forms.input wire:model.blur="form.price" type="number"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="details">
+    <x-forms.field name="form.details">
         <x-forms.label>Details</x-forms.label>
-        <x-forms.textarea wire:model.blur="details" :value="old('details', $shipment->details)"/>
+        <x-forms.textarea wire:model.blur="form.details" :value="old('details', $shipment->details)"/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-forms.field name="documents[]">
+    <x-forms.field name="form.documents[]">
         <x-forms.label>Documents</x-forms.label>
-        <x-forms.file-upload wire:model.blur="documents" multiple/>
+        <x-forms.file-upload wire:model.blur="form.documents" multiple/>
         <x-forms.error-message/>
     </x-forms.field>
-    <x-base-button loader-target="updateShipment" type="submit">Edit shipment</x-base-button>
+    <x-base-button loader-target="submit" type="submit">Edit shipment</x-base-button>
 </form>
