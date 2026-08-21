@@ -1,16 +1,24 @@
 <?php
 
 use App\Models\Shipment;
-use App\View\Components\ShipmentCard;
 use Livewire\Component;
 
 new class extends Component {
 
     public Shipment $shipment;
 
-    public function mount()
+    public function mount(): void
     {
         $this->shipment->load('shipmentDocuments');
+    }
+
+    public function iconBasedOnFileExtension(string $extension): string
+    {
+        return match ($extension) {
+            'pdf' => 'fa-file-pdf',
+            'doc', 'docx' => 'fa-file-word',
+            default => 'fa-file-image',
+        };
     }
 };
 ?>
@@ -64,7 +72,7 @@ new class extends Component {
                         class="group flex items-center gap-2 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 transition-colors hover:border-primary/40 hover:bg-white"
                     >
                         <i class="fa-solid text-gray-500 group-hover:text-primary transition-colors
-                                {{ ShipmentCard::iconBasedOnFileExtension(last(explode('.', $document->document_name))) }}"
+                                {{ $this->iconBasedOnFileExtension(last(explode('.', $document->document_name))) }}"
                         ></i>
                         <span
                             class="text-sm font-medium text-gray-700 group-hover:text-primary transition-colors truncate max-w-[10rem]">
