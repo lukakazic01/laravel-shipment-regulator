@@ -6,19 +6,39 @@ use App\Models\Shipment;
 use App\Rules\UserClient;
 use App\Rules\UserTrucker;
 use Illuminate\Validation\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class UpdateShipmentForm extends Form
 {
+    #[Validate]
     public string $title = "";
+
+    #[Validate]
     public string $fromCity = "";
+
+    #[Validate]
     public string $fromCountry = "";
+
+    #[Validate]
     public string $toCity = "";
+
+    #[Validate]
     public string $toCountry = "";
+
+    #[Validate]
     public string $status = "";
+
+    #[Validate]
     public string|null $userId = "";
+
+    #[Validate]
     public string|null $clientId = "";
+
+    #[Validate]
     public int $price;
+
+    #[Validate]
     public string $details = "";
     public array $documents = [];
 

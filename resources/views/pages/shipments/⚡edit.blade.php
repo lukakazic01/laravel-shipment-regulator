@@ -30,7 +30,7 @@ new class extends Component {
 
     public function mount(): void
     {
-        $this->shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES)->add(['label' => 'o', 'value' => 'ok']);
+        $this->shipmentStatuses = SelectOptionsMapper::toSelectOptions(Shipment::SHIPMENT_STATUSES);
         $this->users = SelectOptionsMapper::toSelectOptions(User::query()->get()->toArray(), 'name', 'id');
         $this->form->fill(collect($this->shipment->getOriginal())->mapWithKeys(fn ($value, $key) => [Str::camel($key) => $value]));
     }
@@ -51,57 +51,57 @@ new class extends Component {
     @csrf
     <x-forms.field name="form.title">
         <x-forms.label>Title</x-forms.label>
-        <x-forms.input wire:model.blur="form.title"/>
+        <x-forms.input wire:model.live.blur="form.title"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.fromCity">
         <x-forms.label>From city</x-forms.label>
-        <x-forms.input wire:model.blur="form.fromCity"/>
+        <x-forms.input wire:model.live.blur="form.fromCity"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.fromCountry">
         <x-forms.label>From country</x-forms.label>
-        <x-forms.input wire:model.blur="form.fromCountry"/>
+        <x-forms.input wire:model.live.blur="form.fromCountry"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.toCity">
         <x-forms.label>To city</x-forms.label>
-        <x-forms.input wire:model.blur="form.toCity"/>
+        <x-forms.input wire:model.live.blur="form.toCity"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.toCountry">
         <x-forms.label>To country</x-forms.label>
-        <x-forms.input wire:model.blur="form.toCountry"/>
+        <x-forms.input wire:model.live.blur="form.toCountry"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.status">
         <x-forms.label>Status</x-forms.label>
-        <x-forms.select wire:model.blur="form.status" :values="$shipmentStatuses"/>
+        <x-forms.select wire:model.live.blur="form.status" :values="$shipmentStatuses"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.userId">
         <x-forms.label>Trucker</x-forms.label>
-        <x-forms.select wire:model.blur="form.userId" :values="$users"/>
+        <x-forms.select wire:model.live.blur="form.userId" :values="$users"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.clientId">
         <x-forms.label>Client</x-forms.label>
-        <x-forms.select wire:model.blur="form.clientId" :values="$users"/>
+        <x-forms.select wire:model.live.blur="form.clientId" :values="$users"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.price">
         <x-forms.label>Price</x-forms.label>
-        <x-forms.input wire:model.blur="form.price" type="number"/>
+        <x-forms.input wire:model.live.blur="form.price" type="number"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.details">
         <x-forms.label>Details</x-forms.label>
-        <x-forms.textarea wire:model.blur="form.details" :value="old('details', $shipment->details)"/>
+        <x-forms.textarea wire:model.live.blur="form.details" :value="old('details', $shipment->details)"/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-forms.field name="form.documents[]">
         <x-forms.label>Documents</x-forms.label>
-        <x-forms.file-upload wire:model.blur="form.documents" multiple/>
+        <x-forms.file-upload wire:model.live.blur="form.documents" multiple/>
         <x-forms.error-message/>
     </x-forms.field>
     <x-base-button loader-target="submit" type="submit">Edit shipment</x-base-button>
