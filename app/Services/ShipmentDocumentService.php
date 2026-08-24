@@ -6,6 +6,7 @@ use App\Models\Shipment;
 use App\Repositories\ShipmentDocumentRepository;
 use App\Traits\HandleImagesTrait;
 use Illuminate\Http\UploadedFile;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class ShipmentDocumentService
 {
@@ -37,13 +38,16 @@ class ShipmentDocumentService
         }
     }
 
-    private function storeImage(UploadedFile $document, int $shipmentId): void {
+    private function storeImage(UploadedFile|TemporaryUploadedFile $document, int $shipmentId): void {
+        if ($document instanceof TemporaryUploadedFile) {
+            $document = $document->getRealPath();
+        }
         $name = $this->uploadImage($document, "/documents/$shipmentId/");
         $name = '/' . $shipmentId . '/' . $name;
         $this->shipmentDocumentRepository->createShipmentDocument($shipmentId, $name);
     }
 
-    private function storeDocument(UploadedFile $document, int $shipmentId): void {
+    private function storeDocument(UploadedFile|TemporaryUploadedFile $document, int $shipmentId): void {
         $extension = $document->extension();
         $name = uniqid() . "." . $extension;
         $path = $document->storeAs("documents/$shipmentId", $name, "public");

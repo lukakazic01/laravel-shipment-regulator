@@ -2,7 +2,6 @@
 
 namespace App\Repositories;
 
-use App\Http\Requests\CreateShipmentRequest;
 use App\Models\Shipment;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -26,12 +25,12 @@ class ShipmentRepository
     }
 
     /**
-     * @param CreateShipmentRequest $request
+     * @param mixed $validatedData
      * @return Shipment
      */
-    public function createShipment(CreateShipmentRequest $request): Shipment
+    public function createShipment(mixed $validatedData): Shipment
     {
-        return Shipment::query()->create($request->validated());
+        return Shipment::query()->create($validatedData);
     }
 
 }

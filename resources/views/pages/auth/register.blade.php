@@ -1,4 +1,5 @@
 <x-layout>
+    <x-slot:title>Register</x-slot:title>
     <form method="POST" action="{{ route('register.store') }}" class="flex flex-col gap-4">
         @csrf
         <x-forms.field required name="name">

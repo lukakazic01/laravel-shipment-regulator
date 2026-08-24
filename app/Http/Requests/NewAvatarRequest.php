@@ -9,7 +9,7 @@ class NewAvatarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'profile_image' => 'required|image|mimes:jpeg,png,jpg,webp,avif|max:4096',
+            'profileImage' => 'required|image|mimes:jpeg,png,jpg,webp,avif|max:4096',
         ];
     }
 }

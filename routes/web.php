@@ -1,25 +1,22 @@
 <?php
 
-use App\Http\Controllers\AdminProfileController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ShipmentsController;
+use App\Models\Shipment;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home')->name('home');
+Route::livewire('/', 'pages::home')->name('home');
 
-Route::controller(ProfileController::class)->name('profile.')->prefix('/profile')->middleware('auth')->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::put('/', 'changeAvatar')->name('change-avatar');
-});
+Route::livewire('/profile', 'pages::profile')->middleware('auth')->name('profile.index');
 
-Route::controller(AdminProfileController::class)->name('admin.')->prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
+Route::name('admin.')->prefix('/admin')->middleware(['auth', 'admin'])->group(function () {
     Route::prefix('/profile')->name('profile.')->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('{user}/edit', 'edit')->name('edit');
-        Route::patch('{user}/updateRole', 'updateRole')->name('updateRole');
+        Route::livewire('/', 'pages::admin.profile')->name('index');
+        Route::livewire('{user}/edit', 'pages::admin.profile.edit')->name('edit');
     });
 });
 
-Route::patch('/shipments/{shipment}/assign-trucker', [ShipmentsController::class, 'assignTrucker'])->name('shipments.assign-trucker');
-
-Route::resource('shipments', ShipmentsController::class);
+Route::name("shipments.")->prefix("/shipments")->group(function () {
+    Route::livewire("/", "pages::shipments")->name('index');
+    Route::livewire('/create', 'pages::shipments.create')->name('create')->can('view-create-shipment-page', Shipment::class);
+    Route::livewire('/{shipment}', "pages::shipments.show")->name('show')->can('view', 'shipment');
+    Route::livewire('/{shipment}/edit', 'pages::shipments.edit')->name('edit')->can('view-edit-shipment-page', 'shipment');
+});
